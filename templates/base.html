@@ -1,0 +1,164 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Tiêu đề trang (cho phép các trang con ghi đè) -->
+    <title>{% block title %}Hệ thống Quản lý Nhân sự{% endblock %}</title>
+
+    <!-- Link Bootstrap CSS (Cần thiết cho Navbar và Dropdown) -->
+    <!-- (Thay thế bằng CDN hoặc đường dẫn static nếu bạn đã tải về) -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <!-- Link Font Awesome (cho icon chuông) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+
+    {% block extrastyle %}{% endblock %}
+</head>
+<body class="bg-white">
+
+<!-- HEADER (LOGO, NAVIGATION, AVATAR) -->
+<header>
+    <!-- Sử dụng lớp navbar-custom để áp dụng màu xanh dương nhạt -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-custom">
+
+        <!-- Logo bên trái ngoài cùng -->
+        <a class="navbar-brand" href="/">
+            {% block brand_logo %}
+                <img src="{% static 'images/logo_placeholder.png' %}" alt="Logo Công ty">
+                <span class="text-primary font-weight-bold">HR System</span>
+            {% endblock brand_logo %}
+        </a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav mx-auto" style="display:flex;justify-content:space-around;width:50%;">
+
+                <!-- Navigation Item: Quản lý Hồ sơ Nhân viên (Drill Down) -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-dark" href="#" id="hosoDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <strong>Quản lý Hồ sơ Nhân viên</strong>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="hosoDropdown">
+                        <a class="dropdown-item" href="#">Hồ sơ Cá nhân</a>
+                        <a class="dropdown-item" href="#">Danh sách Nhân viên</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Báo cáo Hồ sơ</a>
+                    </div>
+                </li>
+
+                <!-- Các Navigation Item khác -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-dark" href="#" id="KPIDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <strong>KPI - Khen thưởng</strong>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="KPIDropdown">
+                        <a class="dropdown-item" href="#">KPI</a>
+                        <a class="dropdown-item" href="#">Khen thưởng</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-dark" href="{% url 'tuyendung' %} id="tdDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <strong>Tuyển dụng</strong>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="tdDropdown">
+                        <a class="dropdown-item" href="{% url 'baidang_list' %}">Bài đăng tuyển dụng</a>
+                        <a class="dropdown-item" href="{% url 'quanly_tuyendung' %}">Quản lý tuyển dụng</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-dark" href="#" id="tlDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <strong>Tính lương</strong>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="tlDropdown">
+                        <a class="dropdown-item" href="#">Bảng chấm công</a>
+                        <a class="dropdown-item" href="#">Hệ số lương</a>
+                    </div>
+                </li>
+
+            </ul>
+
+            <!-- Phần Tài khoản và Thông báo (Bên phải ngoài cùng) -->
+            <ul class="navbar-nav ml-auto">
+                {% if user.is_authenticated %}
+                    <!-- Biểu tượng thông báo -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" title="Thông báo">
+                            <i class="fa fa-bell text-primary"></i>
+                            <span class="badge badge-danger">3</span>
+                        </a>
+                    </li>
+
+                    <!-- Avatar và Trang Hồ sơ -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdownUser" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="{% static 'images/avatar_placeholder.png' %}" alt="Avatar" class="avatar-img mr-2">
+                            {{ request.user.username|default:"Tài khoản" }}
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownUser">
+                            <a class="dropdown-item" href="#">Hồ sơ cá nhân</a> <!-- Cần định nghĩa URL 'profile' sau -->
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Đăng xuất</a> <!-- Cần định nghĩa URL logout sau -->
+                        </div>
+                    </li>
+                {% else %}
+                    <!-- Hiển thị nút Đăng nhập nếu chưa xác thực -->
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-outline-primary" href="{% url 'accounts:login' %}">Đăng nhập</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<!-- KHỐI NỘI DUNG CHÍNH -->
+<main>
+    <!-- Thẻ div.container-fluid để tạo bố cục và khoảng trống [9] -->
+    <div class="container-fluid mt-3">
+
+        <!-- Xuất thông điệp (messages) của Django [9, 10] -->
+        {% for message in messages %}
+        <div class="alert alert-{% if message.level_tag == 'error' %}danger{% else %}{{ message.level_tag }}{% endif %}" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+
+        {% block content %}
+            <div class="jumbotron bg-light">
+                <h1 class="display-4 text-primary">Chào mừng đến với Hệ thống Quản lý Nhân sự</h1>
+                <p class="lead">Giao diện mẫu sử dụng base.html cấp dự án.</p>
+            </div>
+        {% endblock content %}
+    </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="footer-custom mt-5 py-3 border-top">
+    <div class="container">
+        <p class="text-center mb-1">
+            <a href="/about" class="text-secondary mx-2">Về chúng tôi</a> |
+            <a href="/policy" class="text-secondary mx-2">Trang Chính sách</a>
+        </p>
+        <p class="text-center text-muted mb-0">
+            &copy; 2024 [Tên Công ty của bạn]. Copyright.
+        </p>
+    </div>
+</footer>
+
+<!-- Thêm Bootstrap JS (Cần cho Dropdown và Collapse của Navbar) -->
+<!-- Lưu ý: Cần import jQuery và Popper.js trước Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+</body>
+</html>
