@@ -37,7 +37,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+<<<<<<< HEAD
     'Quanlytuyendung',
+=======
+    'Khenthuong',
+    'Quanlyhoso',
+    'Quanlytuyendung',
+    'Tinhluong'
+>>>>>>> 84e88039b560740fb4180602ede5cad95deb7895
 ]
 
 MIDDLEWARE = [
