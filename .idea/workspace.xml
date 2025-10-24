@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="05cbf548-2252-44d4-aa74-9b628bbfcf49" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Khenthuong/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Khenthuong/admin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Khenthuong/apps.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Khenthuong/migrations/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Khenthuong/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Khenthuong/tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Khenthuong/views.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Quanlyhoso/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Quanlyhoso/admin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Quanlyhoso/apps.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Quanlyhoso/migrations/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Quanlyhoso/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Quanlyhoso/tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Quanlyhoso/views.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Quanlytuyendung/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Quanlytuyendung/admin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Quanlytuyendung/apps.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Quanlytuyendung/migrations/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Quanlytuyendung/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Quanlytuyendung/tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Quanlytuyendung/views.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Tinhluong/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Tinhluong/admin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Tinhluong/apps.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Tinhluong/migrations/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Tinhluong/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Tinhluong/tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Tinhluong/views.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/admin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/apps.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/giuaki/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/giuaki/asgi.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/giuaki/settings.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/giuaki/urls.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/giuaki/wsgi.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/manage.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/Tinhluong/migrations/0001_initial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/views.py" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/Tinhluong" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="34UkSFHAZopgTMmuwlt4bpLvT9A" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python.Django Dev Server.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/DELL/PycharmProjects/LTW/BAITAPGIUAKI&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\DELL\PycharmProjects\LTW\BAITAPGIUAKI" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Django Dev Server" type="PythonConfigurationType" factoryName="Python">
+      <module name="BAITAPGIUAKI" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.13" />
+      <option name="WORKING_DIRECTORY" value="C:\Users\DELL\PycharmProjects\LTW\BAITAPGIUAKI" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/manage.py" />
+      <option name="PARAMETERS" value="runserver" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-b3ae9b5d7125-f0eec537fc84-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.23892.439" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="05cbf548-2252-44d4-aa74-9b628bbfcf49" name="Changes" comment="" />
+      <created>1761275535774</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1761275535774</updated>
+    </task>
+    <servers />
+  </component>
+</project>
