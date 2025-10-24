@@ -3,5 +3,9 @@
   <component name="Black">
     <option name="sdkName" value="Python 3.13 virtualenv at C:\Users\hodan\PycharmProjects\LTW\.venv" />
   </component>
+<<<<<<< HEAD
   <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.13" project-jdk-type="Python SDK" />
+=======
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.13 virtualenv at C:\Users\hodan\PycharmProjects\LTW\.venv" project-jdk-type="Python SDK" />
+>>>>>>> fa0c8ecea6c4e0555aaae0b6539fb182d3ccc39a
 </project>
