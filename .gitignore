@@ -1,0 +1,6 @@
+# Python/Django
+__pycache__/
+*.pyc
+
+# Database
+db.sqlite3
