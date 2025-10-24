@@ -3,6 +3,21 @@ from django.contrib import messages
 from .forms import CandidateFileForm
 from .models import CandidateFile
 
+def welcome_view(request):
+    # Hàm render sẽ tìm và tải base.html lên
+    return render(request, 'base.html')
+
+def tuyendung(request):
+    return render(request, 'Quanlytuyendung/tuyendung.html')
+
+# Trang danh sách bài đăng tuyển dụng
+def baidang_list(request):
+    return render(request, 'Quanlytuyendung/baidang_list.html')
+
+# Trang quản lý tuyển dụng
+def quanly_tuyendung(request):
+    return render(request, 'Quanlytuyendung/quanly_tuyendung.html')
+
 def candidate_apply(request):
     if request.method == "POST":
         # Khởi tạo form với dữ liệu từ POST

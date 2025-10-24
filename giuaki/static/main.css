@@ -1,0 +1,41 @@
+/* Định nghĩa biến màu (Dùng màu xanh dương nhạt cho tone chính) */
+:root {
+    --light-blue: #ADD8E6;
+    --primary-color: #007bff;
+    --footer-bg: #f8f9fa;
+}
+
+body {
+    background-color: white; /* Tone nền chính là trắng */
+}
+
+/* Định dạng Header/Navbar */
+.navbar-custom {
+    background-color: var(--light-blue) !important;
+    border-bottom: 1px solid #cceeff;
+}
+
+.navbar-brand img {
+     height: 30px;
+}
+
+/* Định dạng Avatar */
+.avatar-img {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 1px solid var(--primary-color);
+}
+
+/* Định dạng Footer */
+.footer-custom {
+    background-color: var(--footer-bg);
+    color: #6c757d;
+}
+
+.navbar-nav.mx-auto {
+    display: flex;
+    justify-content: space-around; /* hoặc dùng space-evenly nếu muốn cách đều cả hai bên */
+    width: 60%; /* tùy chọn – điều chỉnh để menu không quá rộng */
+}
