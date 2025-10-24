@@ -1,0 +1,22 @@
+
+{% block title %} <h1>Form Ứng Tuyển</h1>{% endblock %}
+
+{% block content %}
+    <h1>Nộp Hồ Sơ Ứng Viên</h1>
+
+    {# Hiển thị thông báo (nếu có, ví dụ: messages.success) #}
+    {% for message in messages %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <form method="post" enctype="multipart/form-data"> 
+        {% csrf_token %} 
+        
+        {# Render form #}
+        {{ form.as_p }} 
+        
+        <button type="submit" class="btn btn-primary">Gửi Hồ Sơ</button>
+    </form>
+{% endblock %}
