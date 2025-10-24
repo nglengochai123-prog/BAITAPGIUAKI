@@ -37,12 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-<<<<<<< HEAD
-=======
     'Khenthuong',
     'Quanlyhoso',
     'Quanlytuyendung',
->>>>>>> 36361fd9f38e823290ef0f1492343ccdd90dadfa
     'Tinhluong'
 ]
 
