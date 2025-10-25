@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1>{{ title }}</h1>
+
+    <!-- 
+        Thiết lập method="post" để gửi dữ liệu [20]
+        Lưu ý: Bạn có thể cần thêm enctype="multipart/form-data" 
+        nếu Model này có trường FileField/ImageField, nhưng ở đây không cần [21, 22].
+    -->
+    <form method="post">
+        <!-- BẮT BUỘC: Bảo mật CSRF -->
+        {% csrf_token %} 
+
+        <!-- Hiển thị Form sử dụng phương thức as_p (hoặc as_table, as_ul) [23] -->
+        {{ form.as_p }}
+
+        <!-- Nút Submit [17, 24] -->
+        <button type="submit" class="btn btn-primary">Tạo Bài Đăng</button>
+    </form>
+
+         
+</div>
+{% endblock %}

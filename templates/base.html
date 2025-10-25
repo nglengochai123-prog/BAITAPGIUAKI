@@ -14,6 +14,7 @@
 
     <!-- Link Font Awesome (cho icon chuông) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'main.css' %}">
@@ -25,12 +26,12 @@
 <!-- HEADER (LOGO, NAVIGATION, AVATAR) -->
 <header>
     <!-- Sử dụng lớp navbar-custom để áp dụng màu xanh dương nhạt -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-custom">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-custom" style="min-height:100px; align-items:center;">
 
         <!-- Logo bên trái ngoài cùng -->
-        <a class="navbar-brand" href="/">
+        <a class="navbar-brand d-flex align-items-center" href="/" style="gap:10px;">
             {% block brand_logo %}
-                <img src="{% static 'images/logo_placeholder.png' %}" alt="Logo Công ty">
+                <img src="{% static 'logo.png' %}" alt="Logo Công ty" class="logo-img" style="height:65px;width:auto;display:block;">
                 <span class="text-primary font-weight-bold">HR System</span>
             {% endblock brand_logo %}
         </a>
@@ -66,11 +67,12 @@
                     </div>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-dark" href="{% url 'tuyendung' %} id="tdDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle text-dark" href="{% url 'recruitment_home' %}" id="tdDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <strong>Tuyển dụng</strong>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="tdDropdown">
-                        <a class="dropdown-item" href="{% url 'baidang_list' %}">Bài đăng tuyển dụng</a>
+                        <a class="dropdown-item" href="{% url 'all_job_postings' %}">Bài đăng tuyển dụng</a>
+                        <a class="dropdown-item" href="{% url 'candidate_apply' %}">Form Tuyển dụng</a>
                         <a class="dropdown-item" href="{% url 'quanly_tuyendung' %}">Quản lý tuyển dụng</a>
                     </div>
                 </li>
@@ -90,18 +92,18 @@
             <ul class="navbar-nav ml-auto">
                 {% if user.is_authenticated %}
                     <!-- Biểu tượng thông báo -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" title="Thông báo">
-                            <i class="fa fa-bell text-primary"></i>
-                            <span class="badge badge-danger">3</span>
+                    <li class="nav-item d-flex align-items-center">
+                        <a class="nav-link d-flex align-items-center position-relative" href="#" title="Thông báo" style="padding-top: 0; padding-bottom: 0;">
+                            <i class="fa fa-bell text-primary" style="font-size: 22px;"></i>
+                            <span class="badge badge-danger position-absolute" style="top: 0; right: 0; font-size: 10px;">3</span>
                         </a>
                     </li>
 
                     <!-- Avatar và Trang Hồ sơ -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdownUser" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src="{% static 'images/avatar_placeholder.png' %}" alt="Avatar" class="avatar-img mr-2">
-                            {{ request.user.username|default:"Tài khoản" }}
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdownUser" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="gap:10px;">
+                            <img src="{% static 'avatar1.jpg' %}" alt="Avatar" class="avatar-img" style="height:55px;width:55px;display:block;">
+                            <span class="text-primary font-weight-bold">{{ request.user.username|default:"Tài khoản" }}</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownUser">
                             <a class="dropdown-item" href="#">Hồ sơ cá nhân</a> <!-- Cần định nghĩa URL 'profile' sau -->
@@ -112,7 +114,7 @@
                 {% else %}
                     <!-- Hiển thị nút Đăng nhập nếu chưa xác thực -->
                     <li class="nav-item">
-                        <a class="nav-link btn btn-outline-primary" href="{% url 'accounts:login' %}">Đăng nhập</a>
+                        <a class="nav-link btn btn-outline-primary" href="{% url 'login' %}">Đăng nhập</a>
                     </li>
                 {% endif %}
             </ul>
@@ -142,17 +144,63 @@
 </main>
 
 <!-- FOOTER -->
+<!--
 <footer class="footer-custom mt-5 py-3 border-top">
     <div class="container">
-        <p class="text-center mb-1">
-            <a href="/about" class="text-secondary mx-2">Về chúng tôi</a> |
-            <a href="/policy" class="text-secondary mx-2">Trang Chính sách</a>
-        </p>
-        <p class="text-center text-muted mb-0">
-            &copy; 2024 [Tên Công ty của bạn]. Copyright.
-        </p>
+        <div class="row justify-content-between">
+            <p class="text-center mb-1">
+                <a href="/about" class="text-secondary mx-2">Về chúng tôi</a> |
+                <a href="/policy" class="text-secondary mx-2">Trang Chính sách</a>
+            </p>
+            <p class="text-center text-muted mb-0">
+                &copy; 2024 [Tên Công ty của bạn]. Copyright.
+            </p>
+        </div>
     </div>
 </footer>
+-->
+<footer class="footer-custom mt-5 py-3 border-top">
+  <div class="container-fluid px-5">
+    <div class="row justify-content-between">
+      <!-- Cột 1 -->
+      <div class="col-md-4">
+        <h5>HR System</h5>
+        <p>Empowering your workplace with smart management</p>
+          <!--
+        <div class="d-flex gap-3">
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+        </div>
+        -->
+        <p class="mt-2 mb-0"><i class="fas fa-map-marker-alt"></i> 71 Ngũ Hành Sơn, Đà Nẵng</p>
+        <p class="mb-0"><i class="fas fa-envelope"></i> hrsystem@gmail.com</p>
+        <p><i class="fas fa-phone"></i> 032 5657 642</p>
+      </div>
+
+      <!-- Cột 2 -->
+      <div class="col-md-3">
+        <h5>Về chúng tôi</h5>
+        <ul class="list-unstyled">
+          <li><a href="#">Trang chủ</a></li>
+          <li><a href="#">Giới thiệu</a></li>
+          <li><a href="#">Liên hệ</a></li>
+        </ul>
+      </div>
+
+      <!-- Cột 3 -->
+      <div class="col-md-3">
+        <h5>Chính sách</h5>
+        <ul class="list-unstyled">
+          <li><a href="#">Chính sách an toàn</a></li>
+          <li><a href="#">Chính sách bảo mật</a></li>
+          <li><a href="#">Hướng dẫn sử dụng</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
 
 <!-- Thêm Bootstrap JS (Cần cho Dropdown và Collapse của Navbar) -->
 <!-- Lưu ý: Cần import jQuery và Popper.js trước Bootstrap JS -->

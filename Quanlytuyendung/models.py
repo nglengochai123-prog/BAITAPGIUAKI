@@ -134,12 +134,14 @@ class RecruitmentPost(models.Model):
     # Khóa chính (PK) ID sẽ được tạo tự động nếu không khai báo mã bài đăng (PK) tường minh [7, 8].
 
     # Sử dụng TextField cho thông tin chi tiết bài đăng [10, 11, 18].
+    title = models.TextField(verbose_name="Tiêu đề bài đăng")
     content = models.TextField(
         verbose_name="Thông tin bài đăng"
     )
 
     # Ngày đăng
     date_posted = models.DateField(
+        auto_now_add=True,
         verbose_name="Ngày đăng"
     )
 

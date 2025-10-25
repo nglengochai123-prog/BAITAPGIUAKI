@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Đăng nhập</title>
+</head>
+<body style="background-color:#ADD8E6; font-family:'Segoe UI', sans-serif; height:100vh; display:flex; justify-content:center; align-items:center; margin:0;">
+
+  <div style="background:#2c2c2c; padding:40px 50px; border-radius:12px; color:white; width:350px; box-shadow:0 5px 15px rgba(0,0,0,0.5); text-align:center;">
+
+    <h2 style="margin-bottom:10px; font-weight:700;">Đăng nhập</h2>
+    <p style="margin-bottom:30px; font-size:15px; color:white;">Please enter your login and password!</p>
+
+    <form method="post">
+      {% csrf_token %}
+
+      <input
+        type="text"
+        name="username"
+        placeholder="Username"
+        style="width:100%; padding:14px; margin-bottom:15px; border:none; border-radius:8px; background:white; color:white; font-size:16px;"
+      >
+
+      <input
+        type="password"
+        name="password"
+        placeholder="Password"
+        style="width:100%; padding:14px; margin-bottom:20px; border:none; border-radius:8px; background:white; color:white; font-size:16px;"
+      >
+
+      <button
+        type="submit"
+        style="
+          width:100%;
+          padding:14px;
+          background-color:#007bff;
+          color:white;
+          border:none;
+          border-radius:8px;
+          font-size:16px;
+          font-weight:bold;
+          cursor:pointer;
+          transition:background 0.3s;
+        "
+        onmouseover="this.style.backgroundColor='#0056b3'"
+        onmouseout="this.style.backgroundColor='#007bff'"
+      >
+        Đăng nhập
+      </button>
+    </form>
+
+  </div>
+</body>
+</html>

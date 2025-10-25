@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }}{% endblock %} 
+
+{% block content %}
+<div class="container-fluid">
+    <h1>{{ title }}</h1>
+
+    <div class="all-posts-list">
+        <ul class="list-group">
+        {% for post in all_posts %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <h5><a href="#">{{ post.title }}</a></h5> 
+                    <p>{{ post.content|truncatechars:100 }}</p>
+                </div>
+                <span class="badge badge-info badge-pill">{{ post.date_posted|date:"d/m/Y" }}</span>
+            </li>
+        {% empty %}
+            <li class="list-group-item">Hiện không có bài đăng nào.</li>
+        {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

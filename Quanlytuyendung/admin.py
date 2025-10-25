@@ -17,7 +17,7 @@ class OfficialEmployeeAdmin(admin.ModelAdmin):
     # Các trường này chỉ có giá trị cố định ("Đạt", "Thành công") nên có thể đặt là chỉ đọc
     readonly_fields = ('training_status', 'official_status')
 class RecruitmentPostAdmin(admin.ModelAdmin):
-    list_display = ('content', 'date_posted')
+    list_display = ('title', 'content', 'date_posted')
 
 # Register your models here.
 admin.site.register(CandidateFile, CandidateFileAdmin)

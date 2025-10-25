@@ -1,0 +1,33 @@
+{% extends 'base.html' %} 
+
+{% block title %}{{ title }}{% endblock %} 
+
+{% block content %}
+<div class="container-fluid">
+    <h2>Trang Tổng quan Tuyển dụng</h2>
+
+    <!-- PHẦN 1: HIỂN THỊ 5 BÀI ĐĂNG MỚI NHẤT -->
+    <div class="latest-posts my-4">
+        <h3>5 Bài Đăng Tuyển Dụng Mới Nhất</h3>
+        <ul class="list-group">
+        {% for post in latest_posts %}
+            <li class="list-group-item">
+                <a href="#">{{ post.title }}</a> 
+                <span class="text-muted small">({{ post.date_posted|date:"d/m/Y" }})</span>
+            </li>
+        {% empty %}
+            <li class="list-group-item">Hiện chưa có bài đăng nào.</li>
+        {% endfor %}
+        </ul>
+    </div>
+
+    <!-- PHẦN 2: LINK TỚI TRANG HIỂN THỊ TOÀN BỘ BÀI ĐĂNG -->
+    <div class="all-posts-link my-4">
+        <h4>Xem Toàn Bộ Bài Đăng Tuyển Dụng</h4>
+        <!-- Sử dụng thẻ template url để tạo link đến trang hiển thị tất cả bài đăng -->
+        <a href="{% url 'all_job_postings' %}" class="btn btn-primary">
+            Bài Đăng Tuyển Dụng (Xem Tất Cả)
+        </a>
+    </div>
+</div>
+{% endblock %}

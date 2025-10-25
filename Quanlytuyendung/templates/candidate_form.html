@@ -1,22 +1,125 @@
+{% extends 'base.html' %}
+{% load static %}
 
-{% block title %} <h1>Form Ứng Tuyển</h1>{% endblock %}
+{% block title %}Đơn Ứng Tuyển{% endblock %}
 
 {% block content %}
-    <h1>Nộp Hồ Sơ Ứng Viên</h1>
+<style>
+    body {
+        background-color: #f4f8ff;
+        font-family: 'Segoe UI', sans-serif;
+    }
+    .form-container {
+        max-width: 900px;
+        margin: 50px auto;
+        background-color: white;
+        padding: 40px 60px;
+        border-radius: 20px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
+    .form-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .form-header h1 {
+        font-weight: 700;
+        color: #0d3b66;
+    }
+    .form-header p {
+        color: #5f6c7b;
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+    label {
+        font-weight: 600;
+        color: #0d3b66;
+    }
+    input, select, textarea {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        margin-top: 5px;
+        font-size: 15px;
+        transition: all 0.3s ease;
+    }
+    input:focus, select:focus, textarea:focus {
+        border-color: #3b82f6;
+        box-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
+        outline: none;
+    }
+    .btn-submit {
+        width: 100%;
+        padding: 14px;
+        background-color: #2563eb;
+        border: none;
+        color: white;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 16px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .btn-submit:hover {
+        background-color: #1e40af;
+    }
+    .required::after {
+        content: " *";
+        color: red;
+    }
+</style>
 
-    {# Hiển thị thông báo (nếu có, ví dụ: messages.success) #}
-    {% for message in messages %}
-        <div class="alert alert-success">
-            {{ message }}
+<div class="form-header">
+    <img src="https://cdn-icons-png.flaticon.com/512/1828/1828919.png" alt="icon" width="60" height="60">
+    <h1>Đơn Ứng Tuyển</h1>
+    <p>Vui lòng điền đầy đủ thông tin bên dưới</p>
+</div>
+
+<div class="form-container">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label class="required">Họ và Tên</label>
+            {{ form.fullname }}
         </div>
-    {% endfor %}
 
-    <form method="post" enctype="multipart/form-data"> 
-        {% csrf_token %} 
-        
-        {# Render form #}
-        {{ form.as_p }} 
-        
-        <button type="submit" class="btn btn-primary">Gửi Hồ Sơ</button>
+        <div class="form-group" style="display:flex; gap:20px;">
+            <div style="flex:1;">
+                <label class="required">Ngày sinh</label>
+                {{ form.dob }}
+            </div>
+            <div style="flex:1;">
+                <label class="required">Số điện thoại</label>
+                {{ form.phonenumber }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="required">Địa chỉ Email</label>
+            {{ form.email }}
+        </div>
+
+        <div class="form-group">
+            <label class="required">Trình độ học vấn</label>
+            {{ form.study }}
+        </div>
+
+        <div class="form-group">
+            <label class="required">Liên kết CV</label>
+            {{ form.linkCV }}
+        </div>
+
+        <div class="form-group">
+            <label class="required">Kỹ năng</label>
+            {{ form.skill }}
+            <small class="text-danger">Vui lòng chọn ít nhất một kỹ năng</small>
+        </div>
+
+        <button type="submit" class="btn-submit">
+            <span style="margin-right:8px;">📤</span> Nộp đơn ứng tuyển
+        </button>
     </form>
+</div>
 {% endblock %}
