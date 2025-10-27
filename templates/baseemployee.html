@@ -29,10 +29,10 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-custom" style="min-height:100px; align-items:center;">
 
         <!-- Logo bên trái ngoài cùng -->
-        <a class="navbar-brand d-flex align-items-center" href="{% url 'welcome_view' %}" style="gap:10px;">
+        <a class="navbar-brand d-flex align-items-center" href="{% url 'welcome_view_employee' %}" style="gap:10px;">
             {% block brand_logo %}
                 <img src="{% static 'logo.png' %}" alt="Logo Công ty" class="logo-img" style="height:65px;width:auto;display:block;">
-                <span class="text-primary font-weight-bold">HR System</span>
+                <span class="text-primary font-weight-bold">Employee System</span>
             {% endblock brand_logo %}
         </a>
 
@@ -46,43 +46,38 @@
                 <!-- Navigation Item: Quản lý Hồ sơ Nhân viên (Drill Down) -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-dark" href="#" id="hosoDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <strong>Quản lý Hồ sơ Nhân viên</strong>
+                        <strong>Hồ sơ cá nhân</strong>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="hosoDropdown">
-                        <a class="dropdown-item" href="#">Hồ sơ Cá nhân</a>
-                        <a class="dropdown-item" href="#">Danh sách Nhân viên</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Báo cáo Hồ sơ</a>
+                        <a class="dropdown-item" href="#">Gửi thông tin cá nhân</a>
                     </div>
                 </li>
 
                 <!-- Các Navigation Item khác -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-dark" href="#" id="KPIDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <strong>KPI - Khen thưởng</strong>
+                    <a class="nav-link dropdown-toggle text-dark" href="#" id="dtDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <strong>Đào tạo</strong>
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="KPIDropdown">
-                        <a class="dropdown-item" href="#">Hiệu suất làm việc</a>
-                        <a class="dropdown-item" href="#">Khen thưởng</a>
+                    <div class="dropdown-menu" aria-labelledby="dtDropdown">
+                        <a class="dropdown-item" href="#">Gửi yêu cầu đào tạo</a>
                     </div>
                 </li>
+
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-dark" href="{% url 'recruitment_home' %}" id="tdDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <strong>Tuyển dụng</strong>
+                    <a class="nav-link dropdown-toggle text-dark" href="#" id="ccDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <strong>Bảng chấm công</strong>
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="tdDropdown">
-                        <a class="dropdown-item" href="{% url 'all_job_postings' %}">Bài đăng tuyển dụng</a>
-                        <a class="dropdown-item" href="{% url 'candidate_apply' %}">Form Tuyển dụng</a>
-                        <a class="dropdown-item" href="{% url 'quanly_tuyendung' %}">Quản lý tuyển dụng</a>
+                    <div class="dropdown-menu" aria-labelledby="ccDropdown">
+                        <a class="dropdown-item" href="#">Xác nhận bảng chấm công</a>
                     </div>
                 </li>
+
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-dark" href="#" id="tlDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <strong>Tính lương</strong>
+                    <a class="nav-link dropdown-toggle text-dark" href="#" id="knDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <strong>Khiếu nại</strong>
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="tlDropdown">
-                        <a class="dropdown-item" href="#">Bảng chấm công</a>
-                        <a class="dropdown-item" href="#">Hệ số lương</a>
+                    <div class="dropdown-menu" aria-labelledby="knDropdown">
+                        <a class="dropdown-item" href="#">Gửi khiếu nại</a>
                     </div>
                 </li>
 

@@ -3,10 +3,6 @@ from django.contrib import messages
 from .forms import CandidateFileForm, RecruitmentPostForm
 from .models import RecruitmentPost, CandidateFile
 
-def welcome_view(request):
-    # Hàm render sẽ tìm và tải base.html lên
-    return render(request, 'base.html')
-
 # View hiển thị 5 bài đăng mới nhất
 def recruitment_home(request):
     # 1. Truy vấn CSDL: Sắp xếp theo ngày đăng giảm dần (mới nhất lên đầu) và chỉ lấy 5 bản ghi đầu tiên.
