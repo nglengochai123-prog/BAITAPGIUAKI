@@ -1,4 +1,3 @@
-
 from django import forms
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q, Count, Sum  # Sử dụng cho các truy vấn phức tạp và tính tổng [15-17]

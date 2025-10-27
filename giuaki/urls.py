@@ -30,6 +30,7 @@ urlpatterns = [
     path('manager', views.welcome_view_manager, name='welcome_view_manager'),
     path('employee', views.welcome_view_employee, name='welcome_view_employee'),
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
+    path('', include('Tinhluong.urls')),
 ]
 
 if settings.DEBUG:
