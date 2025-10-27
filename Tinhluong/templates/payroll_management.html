@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% comment %} Kế thừa từ template base.html [35-37] {% endcomment %}
+
+{% block title %}
+    Quản lý Tính Lương Nhân sự
+{% endblock %}
+
+{% block content %}
+    {% comment %}
+    Đặt khối nội dung trong container-fluid để tạo bố cục và khoảng trống (tương tự Bài tập Chương 4) [31]
+    {% endcomment %}
+    <div class="container-fluid">
+
+        <!-- Hiển thị thông báo (Django Messages) -->
+        {% comment %} Áp dụng định dạng Bootstrap cho thông báo [31, 32, 38] {% endcomment %}
+        {% for message in messages %}
+            <div class="alert alert-{% if message.level_tag == 'error' %} danger{% else %}{{ message.level_tag }}{% endif %}" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <h1 class="mt-4">Chức năng Tính Lương</h1>
+        <hr>
+
+        <!-- Phần I: Form lựa chọn Kỳ lương và Kích hoạt Tính toán -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h2>1. Kích hoạt Tính Lương</h2>
+            </div>
+            <div class="card-body">
+                {% if period_form %}
+                    <form method="post" class="mb-4">
+                        {% csrf_token %}
+                        {% comment %} Bắt buộc phải có CSRF token cho POST request [39, 40] {% endcomment %}
+
+                        {{ period_form.as_p }}
+                        {% comment %} Hiển thị form dưới dạng đoạn văn bản [41, 42] {% endcomment %}
+
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-calculator"></i> Thực hiện Tính Lương
+                        </button>
+                    </form>
+                {% else %}
+                    <p class="text-danger">Không thể tải Form lựa chọn kỳ lương.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Phần II: Hiển thị Kết quả Bảng Lương Đã Tính -->
+        <div class="card">
+            <div class="card-header">
+                {% if period %}
+                    <h2>2. Bảng Lương Đã Tính (Kỳ: {{ period.name }})</h2>
+                {% else %}
+                    <h2>2. Bảng Lương Đã Tính</h2>
+                {% endif %}
+            </div>
+            <div class="card-body">
+                {% if payroll_entries %}
+                    <p>Danh sách <strong>{{ payroll_entries|length }}</strong> bảng lương đã được tính cho kỳ này:</p>
+
+                    <ul class="list-group">
+                        {% for entry in payroll_entries %}
+                            {% comment %} Sử dụng cấu trúc list group của Bootstrap, tương tự như book_list [36, 43] {% endcomment %}
+                            <li class="list-group-item">
+                                <span class="text-info">Nhân viên:</span>
+                                <strong>{{ entry.employee.ho_ten }}</strong>
+                                <br>
+                                <span class="text-info">Ngày công thực tế:</span>
+                                <span>{{ entry.so_ngay_cong_thuc_te }} / {{ entry.so_ngay_cong_chuan }} ngày</span>
+                                <br>
+                                <span class="text-info">Lương cơ bản điều chỉnh:</span>
+                                <span>{{ entry.luong_co_ban }} VND</span>
+                                <br>
+                                <span class="text-info">Tổng Phụ cấp:</span>
+                                <span>{{ entry.tong_phu_cap }} VND</span>
+                                <br>
+                                <span class="text-info">Tổng Thưởng:</span>
+                                <span>{{ entry.tong_thuong }} VND</span>
+                                <br>
+                                <span class="text-danger">THỰC LĨNH:</span>
+                                <strong>{{ entry.thuc_linh }} VND</strong>
+
+                                <a href="#" class="btn btn-sm btn-outline-info float-right">
+                                    Xem chi tiết
+                                </a>
+
+                            </li>
+                        {% empty %}
+                            {% comment %} Sử dụng tag empty nếu không có kết quả [43, 44] {% endcomment %}
+                            <p class="text-secondary">Chưa có bảng lương nào được tính cho kỳ này.</p>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>Không có dữ liệu bảng lương để hiển thị. Vui lòng chọn kỳ và thực hiện tính toán.</p>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+{% endblock content %}

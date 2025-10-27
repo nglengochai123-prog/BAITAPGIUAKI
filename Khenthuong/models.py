@@ -4,7 +4,7 @@ from Quanlyhoso.models import NhanVien
 class Project(models.Model):
     name = models.CharField(max_length=500, verbose_name='Tên Dự Án')
     led_project = models.ForeignKey(NhanVien, on_delete=models.CASCADE, related_name='led_projects')
-    employee = models.ForeignKey(NhanVien, on_delete=models.CASCADE, related_name='employee_projects')
+    employee = models.ManyToManyField(NhanVien, through='ProjectEmployee', related_name='employee_projects')
     description = models.TextField(verbose_name='Mô tả', help_text='Nhập mô tả dự án')
     started_date = models.DateField(auto_now_add=True, verbose_name='Ngày bắt đầu')
     ended_date = models.DateField(null=True, verbose_name='Ngày kết thúc')
