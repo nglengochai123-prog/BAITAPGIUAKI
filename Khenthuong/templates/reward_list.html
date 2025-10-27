@@ -1,0 +1,36 @@
+{% extends 'base.html' %} 
+
+{% block title %}{{ title }}{% endblock %} 
+
+{% block content %}
+<div class="container-fluid">
+    <h1>Danh Sách Khen Thưởng Đã Ghi Nhận</h1>
+
+    {% if danh_sach_khen_thuong %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Ngày Thưởng</th>
+                    <th>Mã Nhân Viên</th>
+                    <th>Hạng Mục Khen Thưởng</th>
+                    <th>Thông Báo Áp Dụng</th>
+                    <th>Giá Trị</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in danh_sach_khen_thuong %}
+                <tr>
+                    <td>{{ item.rewarded_date|date:"d/m/Y" }}</td>
+                    <td>{{ item.employee }}</td>
+                    <td>{{ item.reward_item.name }} ({{ item.reward_item.code }})</td>
+                    <td>{{ item.reward_announce }}</td>
+                    <td>{{ item.rewarded_value|floatformat:0 }} VNĐ</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Hiện chưa có thông tin khen thưởng nào.</p>
+    {% endif %}
+</div>
+{% endblock %}
