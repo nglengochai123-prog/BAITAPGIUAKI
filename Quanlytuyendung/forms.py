@@ -7,17 +7,7 @@ from .models import CandidateFile
 class CandidateFileForm(forms.ModelForm):
     class Meta:
         model = CandidateFile
-        fields = ['fullname', 'dob', 'phonenumber', 'email', 'study', 'linkCV', 'skill']
-        widgets = {
-            'fullname': forms.TextInput(attrs={'placeholder': 'Nguyễn Văn A'}),
-            'dob': forms.DateInput(attrs={'type': 'date'}),
-            'phonenumber': forms.TextInput(attrs={'placeholder': '0912345678'}),
-            'email': forms.EmailInput(attrs={'placeholder': 'email@example.com'}),
-            'study': forms.TextInput(attrs={'placeholder': 'THPT'}),
-            'linkCV': forms.URLInput(attrs={'placeholder': 'https://drive.google.com/...'}),
-            'skill': forms.CheckboxSelectMultiple(),
-        }
-
+        fields = '__all__'
 class RecruitmentPostForm(forms.ModelForm):
     # Lớp Meta định nghĩa Model và các trường cần sử dụng [5, 6]
     class Meta:

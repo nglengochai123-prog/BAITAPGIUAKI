@@ -32,6 +32,7 @@ class NhanVien(models.Model):
         ('Đã nghỉ việc', 'Đã nghỉ việc'),
         ('Thử việc', 'Thử việc'),
     )
+    fullname = models.CharField(max_length=255,verbose_name="Họ và Tên", null=True, blank=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name="Tài khoản")
     ma_nhan_vien = models.CharField(max_length=20, unique=True, verbose_name="Mã nhân viên")
     phong_ban = models.ForeignKey(PhongBan, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Phòng ban")
@@ -47,6 +48,7 @@ class NhanVien(models.Model):
         default=12.0,
         verbose_name="Số ngày phép năm còn lại"
     )
+    email = models.EmailField(default='temp@example.com',max_length=255,verbose_name="Địa chỉ Email")
     anh_dai_dien = models.ImageField(upload_to='anh_dai_dien/', null=True, blank=True, verbose_name="Ảnh đại diện")
     ngay_sinh = models.DateField(null=True, blank=True, verbose_name="Ngày sinh")
     gioi_tinh = models.CharField(max_length=10, choices=GIOI_TINH_CHOICES, verbose_name="Giới tính")
@@ -57,13 +59,12 @@ class NhanVien(models.Model):
     noi_cap = models.CharField(max_length=200, blank=True, verbose_name="Nơi cấp")
     ma_so_thue = models.CharField(max_length=20, blank=True, verbose_name="Mã số thuế")
     so_so_bhxh = models.CharField(max_length=20, blank=True, verbose_name="Số sổ BHXH")
-
     class Meta:
         verbose_name = "Nhân Viên"
         verbose_name_plural = "Các Nhân Viên"
 
     def __str__(self):
-        return f"{self.ma_nhan_vien} - {self.user.get_full_name() or self.user.username}"
+        return f"{self.ma_nhan_vien} - {self.fullname}"
 class HopDong(models.Model):
     LOAI_HOP_DONG_CHOICES = (
         ('Thử việc', 'Thử việc'),
