@@ -24,6 +24,7 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('Quanlytuyendung.urls')),
+    path('', include('Khenthuong.urls')),
     path('', views.login, name = 'login'),
     path('hr', views.welcome_view, name='welcome_view'),
     path('manager', views.welcome_view_manager, name='welcome_view_manager'),
