@@ -39,23 +39,6 @@ class CandidateFile(models.Model):
         verbose_name="Kỹ năng"
     )
 
-class Skill(models.Model):
-    name = models.CharField(
-        max_length=100,
-        verbose_name="Tên kỹ năng"
-    )
-    # Phương thức __str__ giúp hiển thị tên kỹ năng trong giao diện quản trị [5, 6].
-    def __str__(self):
-        return self.name
-
-class Status(models.Model):
-    # Khóa ngoại là mã số ứng viên (One-to-Many). Nếu CandidateFile bị xóa, Status cũng bị xóa (CASCADE) [12, 17].
-    candidate = models.ForeignKey(
-        'CandidateFile',
-        on_delete=models.CASCADE,
-        verbose_name="Mã số ứng viên"
-    )
-
     # Trạng thái xét duyệt (có thể bắt đầu bằng 'Ứng tuyển')
     class ReviewStatus(models.TextChoices):
         APPLIED = "APPLIED", _("Ứng tuyển")
@@ -98,38 +81,38 @@ class Status(models.Model):
         verbose_name="Trạng thái gửi offer"
     )
 
-class OfficialEmployee(models.Model):
-    # Khóa ngoại mã số ứng viên (One-to-One). Dùng PROTECT để bảo vệ ứng viên đã thành nhân viên khỏi bị xóa nhầm [4, 17, 20].
-    candidate = models.OneToOneField(
-        'CandidateFile',
-        on_delete=models.PROTECT,
-        verbose_name="Mã số ứng viên"
-    )
-
-    # Khóa ngoại mã trạng thái (One-to-One). Tương tự, dùng PROTECT.
-    status = models.OneToOneField(
-        'Status',
-        on_delete=models.PROTECT,
-        verbose_name="Mã trạng thái offer thành công"
-    )
+    class TrainingStatus(models.TextChoices):
+        ACCEPTED = "PASSED", _("Đạt")
 
     # Đào tạo (chỉ có dữ liệu “Đạt”)
     training_status = models.CharField(
         max_length=10,
-        default="Đạt",
-        editable=False,  # Không cho phép chỉnh sửa qua Admin/Form để đơn giản hóa
-        verbose_name="Trạng thái đào tạo"
+        choices=TrainingStatus.choices,
+        null=True,  # Cho phép NULL
+        blank=True,  # Cho phép để trống trong form
+        verbose_name="Trạng thái sau phỏng vấn"
     )
 
-    # Chính thức hóa nhân viên (chỉ có 1 DL là “Thành công”)
+    class OfficialStatus(models.TextChoices):
+        ACCEPTED = "PASSED", _("Đạt")
+
+    # Đào tạo (chỉ có dữ liệu “Đạt”)
     official_status = models.CharField(
-        max_length=20,
-        default="Thành công",
-        editable=False,  # Không cho phép chỉnh sửa để đơn giản hóa
-        verbose_name="Trạng thái chính thức hóa"
+        max_length=10,
+        choices=TrainingStatus.choices,
+        null=True,  # Cho phép NULL
+        blank=True,  # Cho phép để trống trong form
+        verbose_name="Trạng thái sau phỏng vấn"
     )
 
-    # Có thể thêm logic kiểm tra trong lớp View/Form để chỉ cho phép tạo mới nếu offer_status của Status là 'ACCEPTED' [21].
+class Skill(models.Model):
+    name = models.CharField(
+        max_length=100,
+        verbose_name="Tên kỹ năng"
+    )
+    # Phương thức __str__ giúp hiển thị tên kỹ năng trong giao diện quản trị [5, 6].
+    def __str__(self):
+        return self.name
 
 class RecruitmentPost(models.Model):
     # Khóa chính (PK) ID sẽ được tạo tự động nếu không khai báo mã bài đăng (PK) tường minh [7, 8].

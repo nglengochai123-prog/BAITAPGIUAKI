@@ -19,10 +19,15 @@ from django.urls import path, include
 from django.conf import settings # Import settings
 from django.conf.urls.static import static # Import static
 from django.contrib.auth import views as auth_views
+from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('Quanlytuyendung.urls')),
+    path('', views.login, name = 'login'),
+    path('hr', views.welcome_view, name='welcome_view'),
+    path('manager', views.welcome_view_manager, name='welcome_view_manager'),
+    path('employee', views.welcome_view_employee, name='welcome_view_employee'),
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
 ]
 
