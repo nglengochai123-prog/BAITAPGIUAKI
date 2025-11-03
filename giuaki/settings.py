@@ -133,5 +133,4 @@ MEDIA_ROOT = BASE_DIR / "media" # Định nghĩa thư mục lưu trữ vật lý
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-LOGIN_REDIRECT_URL = '/'     # đăng nhập xong -> về trang chủ
-LOGOUT_REDIRECT_URL = '/'  # đăng xuất -> quay về login
+LOGOUT_REDIRECT_URL = '/login/'  # đăng xuất -> quay về login
