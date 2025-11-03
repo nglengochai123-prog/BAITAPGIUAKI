@@ -1,3 +1,4 @@
+
 from django import forms
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q, Count, Sum  # Sử dụng cho các truy vấn phức tạp và tính tổng [15-17]
@@ -145,13 +146,13 @@ def payroll_management_view(request):
                 except Exception as e:
                     error_count += 1
                     messages.error(request,
-                                   f"Lỗi tính lương cho {employee.ho_ten}: {str(e)}")  # Đăng ký thông điệp lỗi [22, 27]
+                                   f"Lỗi tính lương cho {employee.name}: {str(e)}")  # Đăng ký thông điệp lỗi [22, 27]
 
             messages.success(request,
                              f"Đã hoàn thành tính lương cho kỳ {period.name}: Thành công {success_count}, Lỗi {error_count}.")
 
             # Chuyển hướng sau POST (Pattern Post/Redirect/Get) [27, 28]
-            return redirect('payroll_management_url_name')
+            return redirect('payroll_management_view')
 
         else:
             # Nếu form không hợp lệ
@@ -175,7 +176,7 @@ def payroll_management_view(request):
     # 2. Truy xuất kết quả bảng lương để hiển thị
     if period:
         # Truy xuất tất cả bảng lương đã tính trong kỳ này
-        payroll_entries = PayrollEntry.objects.filter(period=period).order_by('employee__ho_ten')
+        payroll_entries = PayrollEntry.objects.filter(period=period).order_by('employee__name')
 
     # 3. Chuẩn bị Context
     context = {

@@ -1,3 +1,4 @@
+
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.db.models import Count, Q
@@ -35,7 +36,7 @@ class EmployeeSalary(models.Model):
     is_active = models.BooleanField(default=True, verbose_name="Đang áp dụng")
 
     def __str__(self):
-        return f"{self.employee.ho_ten} - {self.component.name}: {self.amount}"
+        return f"{self.employee.name} - {self.component.name}: {self.amount}"
 
     class Meta:
         verbose_name = "Lương Cố định Nhân viên"
@@ -91,7 +92,7 @@ class ChamCong(models.Model):
         ordering = ['-ngay_cham_cong', 'nhan_vien']
 
     def __str__(self):
-        return f"{self.nhan_vien.ho_ten} - {self.ngay_cham_cong}"
+        return f"{self.nhan_vien.name} - {self.ngay_cham_cong}"
 
 
 # Model 5: VariableBonus (Thưởng Biến đổi)
@@ -106,7 +107,7 @@ class VariableBonus(models.Model):
     amount = models.DecimalField(max_digits=15, decimal_places=2, verbose_name="Số tiền thưởng")
 
     def __str__(self):
-        return f"{self.employee.ho_ten} - {self.component.name} ({self.period.name})"
+        return f"{self.employee.name} - {self.component.name} ({self.period.name})"
 
     class Meta:
         verbose_name = "Thưởng Biến đổi"
@@ -131,7 +132,7 @@ class PayrollEntry(models.Model):
     calculated_date = models.DateTimeField(auto_now_add=True, verbose_name="Ngày tính")  # [10, 13, 14]
 
     def __str__(self):
-        return f"Bảng Lương {self.employee.ho_ten} - {self.period.name}"
+        return f"Bảng Lương {self.employee.name} - {self.period.name}"
 
     class Meta:
         verbose_name = "Bảng Lương Đã Tính"
