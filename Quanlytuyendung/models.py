@@ -4,19 +4,16 @@ from django.utils.translation import gettext_lazy as _  # Tùy chọn cho TextCh
 
 # Create your models here.
 class CandidateFile(models.Model):
+    GENDER_CHOICES = (
+        ('Nam', 'Nam'),
+        ('Nữ', 'Nữ'),
+        ('Khác', 'Khác'),
+    )
     # Khóa chính (PK) ID sẽ được tạo tự động mặc định [7, 8].
     fullname = models.CharField(
         max_length=255,
         verbose_name="Họ và Tên"
     )
-    dob = models.DateField(
-        verbose_name="Ngày sinh"
-    )
-    phonenumber = models.CharField(
-        max_length=15,
-        verbose_name="Số điện thoại"
-    )
-
     # Sử dụng EmailField để đảm bảo email phải hợp lệ (PyCharm/Django sẽ kiểm tra) [5, 10, 11, 14].
     email = models.EmailField(
         max_length=255,
@@ -32,7 +29,10 @@ class CandidateFile(models.Model):
     linkCV = models.URLField(
         verbose_name="Liên kết CV"
     )
-
+    dob = models.DateField(null=True, blank=True, verbose_name="Ngày sinh")
+    phone_number = models.CharField(max_length=15, blank=True, verbose_name="Số điện thoại")
+    address = models.TextField(blank=True, verbose_name="Địa chỉ")
+    gender = models.CharField(max_length=10, choices=GENDER_CHOICES, null=True, blank=True)
     # Mối quan hệ Nhiều-Nhiều với Skill. Yêu cầu "tối thiểu 1 cái" cần được kiểm tra ở lớp Form (ModelForm) [3, 4].
     skill = models.ManyToManyField(
         'Skill',

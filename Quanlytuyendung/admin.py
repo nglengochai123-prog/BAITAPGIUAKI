@@ -2,8 +2,7 @@ from django.contrib import admin
 from .models import CandidateFile, Skill, RecruitmentPost
 
 class CandidateFileAdmin(admin.ModelAdmin):
-    list_display = ('fullname', 'email', 'phonenumber', 'dob', 'study', 'review_status', 'interview_result', 'offer_status', 'training_status', 'official_status')
-    search_fields = ('fullname', 'email', 'phonenumber', 'linkCV', 'review_status', 'interview_result', 'offer_status')
+    list_display = ('fullname', 'phone_number')
 
 class RecruitmentPostAdmin(admin.ModelAdmin):
     list_display = ('title', 'content', 'date_posted')

@@ -1,10 +1,10 @@
 from django.contrib import admin
-from Tinhluong.models import (Employee, SalaryComponent, Timesheet, CustomAdjustment, PayrollRecord)
+from .models import (SalaryComponent, EmployeeSalary, PayrollPeriod, Timekeeping, VariableBonus, PayrollEntry)
 
 
-admin.site.register(Employee)
 admin.site.register(SalaryComponent)
-admin.site.register(Timesheet)
-admin.site.register(CustomAdjustment)
-admin.site.register(PayrollRecord)
-
+admin.site.register(EmployeeSalary)
+admin.site.register(PayrollPeriod)
+admin.site.register(Timekeeping)
+admin.site.register(VariableBonus)
+admin.site.register(PayrollEntry)
