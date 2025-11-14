@@ -20,6 +20,7 @@ from django.conf import settings # Import settings
 from django.conf.urls.static import static # Import static
 from django.contrib.auth import views as auth_views
 from . import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 
@@ -40,6 +41,7 @@ urlpatterns = [
     path('', include('Quanlytuyendung.urls')),
     path('', include('Khenthuong.urls')),
     path('', include('Tinhluong.urls')),
+    path('', include('Quanlyhoso.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _  # Tùy chọn cho TextCh
 
 # Create your models here.
 class CandidateFile(models.Model):
-    GIOI_TINH_CHOICES = (
+    GENDER_CHOICES = (
         ('Nam', 'Nam'),
         ('Nữ', 'Nữ'),
         ('Khác', 'Khác'),
@@ -29,10 +29,10 @@ class CandidateFile(models.Model):
     linkCV = models.URLField(
         verbose_name="Liên kết CV"
     )
-    ngay_sinh = models.DateField(null=True, blank=True, verbose_name="Ngày sinh")
-    so_dien_thoai = models.CharField(max_length=15, blank=True, verbose_name="Số điện thoại")
-    dia_chi = models.TextField(blank=True, verbose_name="Địa chỉ")
-    gioi_tinh = models.CharField(max_length=10, choices=GIOI_TINH_CHOICES, null=True, blank=True)
+    dob = models.DateField(null=True, blank=True, verbose_name="Ngày sinh")
+    phone_number = models.CharField(max_length=15, blank=True, verbose_name="Số điện thoại")
+    address = models.TextField(blank=True, verbose_name="Địa chỉ")
+    gender = models.CharField(max_length=10, choices=GENDER_CHOICES, null=True, blank=True)
     # Mối quan hệ Nhiều-Nhiều với Skill. Yêu cầu "tối thiểu 1 cái" cần được kiểm tra ở lớp Form (ModelForm) [3, 4].
     skill = models.ManyToManyField(
         'Skill',

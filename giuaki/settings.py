@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'Quanlyhoso',
     'Quanlytuyendung',
     'Tinhluong',
+    'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [

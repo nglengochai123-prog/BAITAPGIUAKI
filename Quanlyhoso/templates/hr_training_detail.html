@@ -1,0 +1,56 @@
+{% extends base_layout %} {% block title %}Chi tiết Yêu cầu Đào tạo{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <h3>Duyệt Yêu cầu Đào tạo</h3>
+    <hr>
+    
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h5 class="mb-0">Thông tin Yêu cầu</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>Nhân viên:</strong> {{ training_request.employee.full_name }} ({{ training_request.employee.employee_id }})</p>
+                    <p><strong>Ngày gửi:</strong> {{ training_request.submitted_date|date:"d/m/Y H:i" }}</p>
+                    <hr>
+                    <h4><strong>Tên khóa học / Chủ đề:</strong></h4>
+                    <p>{{ training_request.course_name }}</p>
+                    
+                    <h4 class="mt-4"><strong>Lý do / Mục tiêu:</strong></h4>
+                    <blockquote class="blockquote">
+                        <p class="mb-0" style="font-size: 1rem;">{{ training_request.reason|linebreaks }}</p>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">Hành động</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="form-group">
+                            <label for="hr_note">Ghi chú (Bắt buộc nếu từ chối):</label>
+                            <textarea name="hr_note" id="hr_note" class="form-control" rows="4" placeholder="Nhập lý do từ chối hoặc ghi chú khi duyệt..."></textarea>
+                        </div>
+                        <hr>
+                        <button type"submit" name="approve" class="btn btn-success btn-block mb-2">
+                            <i class="fas fa-check"></i> Duyệt Yêu cầu
+                        </button>
+                        
+                        <button type"submit" name="reject" class="btn btn-danger btn-block">
+                            <i class="fas fa-times"></i> Từ chối Yêu cầu
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

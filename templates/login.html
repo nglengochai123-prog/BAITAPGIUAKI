@@ -1,54 +1,96 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Đăng nhập</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đăng nhập vào Hệ thống</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'login_styles.css' %}">
+
+  <!-- (Phần style cho ảnh nền body, giữ nguyên) -->
+  <style>
+    body {
+        background-image: url("{% static 'anh_nen.jpg' %}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+  </style>
 </head>
-<body style="background-color:#ADD8E6; font-family:'Segoe UI', sans-serif; height:100vh; display:flex; justify-content:center; align-items:center; margin:0;">
+<body>
 
-  <div style="background:#2c2c2c; padding:40px 50px; border-radius:12px; color:white; width:350px; box-shadow:0 5px 15px rgba(0,0,0,0.5); text-align:center;">
+  <div class="login-container">
+    <div class="login-left">
+        <!-- Ảnh nền cho khung bên trái -->
+        <div class="login-left-bg" style="background-image: url('{% static 'anh nen.jpg' %}');"></div>
 
-    <h2 style="margin-bottom:10px; font-weight:700;">Đăng nhập</h2>
-    <p style="margin-bottom:30px; font-size:15px; color:white;">Please enter your login and password!</p>
+        <div class="login-left-content">
+            <div class="login-logo">
+                <img src="{% static 'logo.png' %}" alt="Logo">
+                <span>HR System</span>
+            </div>
+        </div>
+        <p class="left-tagline">Empowering your workplace with smart management</p>
+    </div>
 
-    <form method="post">
-      {% csrf_token %}
+    <div class="login-right">
+      <h2 class="welcome-title">Welcome to HR System</h2>
+      <p class="welcome-subtitle">We make it easy for everyone to manage human resources efficiently.</p>
+      <div class="progress-bar-placeholder"></div>
 
-      <input
-        type="text"
-        name="username"
-        placeholder="Username"
-        style="width:100%; padding:14px; margin-bottom:15px; border:none; border-radius:8px; background:white; color:white; font-size:16px;"
-      >
+      <form method="post">
+        {% csrf_token %}
 
-      <input
-        type="password"
-        name="password"
-        placeholder="Password"
-        style="width:100%; padding:14px; margin-bottom:20px; border:none; border-radius:8px; background:white; color:white; font-size:16px;"
-      >
+        <div class="form-group">
+          <i class="fas fa-envelope form-control-icon"></i>
+          <input
+            type="text"
+            name="username"
+            placeholder="Username"
+            class="form-control"
+            required
+          >
+        </div>
 
-      <button
-        type="submit"
-        style="
-          width:100%;
-          padding:14px;
-          background-color:#007bff;
-          color:white;
-          border:none;
-          border-radius:8px;
-          font-size:16px;
-          font-weight:bold;
-          cursor:pointer;
-          transition:background 0.3s;
-        "
-        onmouseover="this.style.backgroundColor='#0056b3'"
-        onmouseout="this.style.backgroundColor='#007bff'"
-      >
-        Đăng nhập
-      </button>
-    </form>
+        <div class="form-group">
+          <i class="fas fa-lock form-control-icon"></i>
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            class="form-control"
+            required
+          >
+        </div>
 
+        <div class="options-row">
+          <label class="remember-me">
+            <input type="checkbox" name="remember_me">
+            Remember me
+          </label>
+          <a href="#" class="forgot-password">Forgot password?</a>
+        </div>
+        <div class="button-group">
+          <button type="submit" class="btn-primary-custom">Login</button>
+        </div>
+        <!-- ======================================== -->
+
+      </form>
+
+      {% if form.errors %}
+        <div style="color: red; text-align: center; margin-top: 20px;">
+          {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+              <p>{{ error }}</p>
+            {% endfor %}
+          {% endif %}
+        </div>
+      {% endif %}
+
+    </div>
   </div>
 </body>
 </html>

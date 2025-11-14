@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="a733ec67-3eb3-4536-8eb2-753172fb42cc" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Quanlyhoso/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Quanlyhoso/migrations/0002_trainingrequest.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Quanlyhoso/templates/employee_form.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Quanlyhoso/templates/employee_list.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Quanlyhoso/templates/hr_request_detail.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Quanlyhoso/templates/hr_request_list.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Quanlyhoso/templates/hr_training_detail.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Quanlyhoso/templates/hr_training_list.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Quanlyhoso/templates/mployee_delete_confirm.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Quanlyhoso/templates/profile.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Quanlyhoso/templates/request_training_form.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Quanlyhoso/templates/request_update_form.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Quanlyhoso/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Tinhluong/templates/payroll_management.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/avatar_requests/Screenshot_2025-09-01_113301.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/login_styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Khenthuong/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/Khenthuong/migrations/0001_initial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Khenthuong/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/Khenthuong/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Quanlyhoso/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/Quanlyhoso/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Quanlyhoso/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/Quanlyhoso/migrations/0001_initial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Quanlyhoso/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/Quanlyhoso/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Quanlyhoso/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/Quanlyhoso/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Khenthuong/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Khenthuong/admin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Khenthuong/apps.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Khenthuong/migrations/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Khenthuong/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Khenthuong/tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Khenthuong/views.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Quanlyhoso/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Quanlyhoso/admin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Quanlyhoso/apps.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Quanlyhoso/migrations/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Quanlyhoso/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Quanlyhoso/tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Quanlyhoso/views.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Quanlytuyendung/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Quanlytuyendung/admin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Quanlytuyendung/apps.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Quanlytuyendung/migrations/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Quanlytuyendung/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Quanlytuyendung/tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Quanlytuyendung/views.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Tinhluong/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Tinhluong/admin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Tinhluong/apps.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Tinhluong/migrations/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Tinhluong/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Tinhluong/tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/Tinhluong/views.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/Tinhluong/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/admin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/apps.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/giuaki/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/giuaki/asgi.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/giuaki/settings.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/giuaki/urls.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/giuaki/wsgi.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/manage.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/Tinhluong/migrations/0001_initial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tinhluong/views.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/giuaki/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/giuaki/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/giuaki/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/giuaki/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/giuaki/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/giuaki/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/baseemployee.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/baseemployee.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/basemanager.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/basemanager.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/Tinhluong" />
+    <option name="ROOT_SYNC" value="SYNC" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="34V8XZ0JGpiCjyWvQGiiDiDq9JY" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.Django Dev Server.executor": "Run",
+    "Python.settings.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "master",
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="Django Dev Server" type="PythonConfigurationType" factoryName="Python">
+      <module name="DuAnNhom-CODE" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.13 (LTW)" />
+      <option name="WORKING_DIRECTORY" value="C:\Users\DELL\PycharmProjects\LTW\BAITAPGIUAKI" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/manage.py" />
+      <option name="PARAMETERS" value="runserver" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-b3ae9b5d7125-f0eec537fc84-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.23892.439" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a733ec67-3eb3-4536-8eb2-753172fb42cc" name="Changes" comment="" />
+      <created>1761287422864</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1761287422864</updated>
+    </task>
+    <servers />
+  </component>
+</project>

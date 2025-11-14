@@ -7,11 +7,11 @@ from .models import CandidateFile
 class CandidateFileForm(forms.ModelForm):
     class Meta:
         model = CandidateFile
-        fields = ['fullname', 'ngay_sinh', 'so_dien_thoai', 'email', 'study', 'linkCV', 'skill']
+        fields = ['fullname', 'dob', 'phone_number', 'email', 'study', 'linkCV', 'skill']
         widgets = {
             'fullname': forms.TextInput(attrs={'placeholder': 'Nguyễn Văn A'}),
-            'ngay_sinh': forms.DateInput(attrs={'type': 'date'}),
-            'so_dien_thoai': forms.TextInput(attrs={'placeholder': '0912345678'}),
+            'dob': forms.DateInput(attrs={'type': 'date'}),
+            'phone_number': forms.TextInput(attrs={'placeholder': '0912345678'}),
             'email': forms.EmailInput(attrs={'placeholder': 'email@example.com'}),
             'study': forms.TextInput(attrs={'placeholder': 'THPT'}),
             'linkCV': forms.URLInput(attrs={'placeholder': 'https://drive.google.com/...'}),

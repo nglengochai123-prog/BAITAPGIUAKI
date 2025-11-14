@@ -1,9 +1,9 @@
 from django.contrib import admin
-from .models import (PhongBan, ChucVu, NhanVien, HopDong, DonNghiPhep)
+from .models import (Department, Position, Employee, Contract, LeaveApplication)
 
 # Register your models here.
-admin.site.register(PhongBan)
-admin.site.register(ChucVu)
-admin.site.register(NhanVien)
-admin.site.register(HopDong)
-admin.site.register(DonNghiPhep)
+admin.site.register(Department)
+admin.site.register(Position)
+admin.site.register(Employee)
+admin.site.register(Contract)
+admin.site.register(LeaveApplication)

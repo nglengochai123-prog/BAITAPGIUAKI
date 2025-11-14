@@ -1,0 +1,31 @@
+{% extends base_layout %} {% load static %}
+
+{% block title %}Xác nhận Xóa{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card shadow-sm border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">Xác nhận Xóa Nhân viên</h4>
+                </div>
+                <div class="card-body">
+                    <p class="lead">Bạn có chắc chắn muốn xóa nhân viên này không?</p>
+                    <h3>{{ employee.full_name }} ({{ employee.employee_id }})</h3>
+                    <p class="text-danger font-weight-bold">
+                        Hành động này không thể hoàn tác. 
+                        Tất cả dữ liệu liên quan (hợp đồng, đơn nghỉ phép,...) của nhân viên này sẽ bị xóa theo.
+                    </p>
+                    <hr>
+                    <form method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Vâng, Xóa</button>
+                        <a href="{% url 'employee_list' %}" class="btn btn-secondary">Hủy</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

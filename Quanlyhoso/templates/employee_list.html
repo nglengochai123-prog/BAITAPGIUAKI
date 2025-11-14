@@ -1,0 +1,229 @@
+{% extends base_layout %}
+{% load static %}
+{% load humanize %} {% block title %}Danh sách Nhân viên{% endblock %}
+
+{% block extrastyle %}
+<style>
+    /* Ẩn card-shadow mặc định */
+    .employee-list-container {
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Bảng chính */
+    .table-employee-list {
+        border-collapse: separate; /* Quan trọng để dùng border-radius */
+        border-spacing: 0 8px; /* Khoảng cách giữa các hàng */
+        margin-top: -8px; /* Bù trừ cho border-spacing */
+    }
+
+    /* Tùy chỉnh Header của bảng */
+    .table-employee-list thead th {
+        border: none !important;
+        padding: 10px 15px !important;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        color: #888;
+        font-weight: 600;
+        background-color: transparent !important; /* Xóa nền 'table-light' */
+    }
+
+    /* Tùy chỉnh các HÀNG (row) */
+    .table-employee-list tbody tr {
+        background-color: #fff;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        border: 1px solid #eee; /* Thêm viền nhẹ */
+        overflow: hidden;
+    }
+
+    .table-employee-list tbody tr:hover {
+        background-color: #fcfcfc;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
+        transform: translateY(-2px);
+    }
+
+    /* Tùy chỉnh các Ô (cell) */
+    .table-employee-list tbody td {
+        padding: 15px !important;
+        vertical-align: middle !important;
+        border: none !important; /* Xóa viền mặc định của bootstrap */
+    }
+
+    /* Ghi đè align-middle của bootstrap để căn trên cùng */
+    .table-employee-list tbody td {
+        vertical-align: top !important;
+    }
+
+    /* --- Định dạng các cột --- */
+
+    /* Cột 1: Employee (Avatar + Tên + ID) */
+    .cell-employee {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .employee-avatar img {
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+    .employee-info {
+        display: flex;
+        flex-direction: column;
+    }
+    .employee-name {
+        font-weight: 600;
+        color: #333;
+        font-size: 0.95rem;
+    }
+    .employee-id {
+        font-size: 0.85rem;
+        color: #777;
+    }
+
+    /* Cột 2: Position (Chức vụ + Lương) */
+    .cell-position {
+        font-size: 0.9rem;
+    }
+    .position-title {
+        font-weight: 500;
+        color: #444;
+    }
+    .position-salary {
+        font-size: 0.85rem;
+        color: #777;
+    }
+
+    /* Cột 3: Ngày vào làm */
+    .cell-date {
+        font-size: 0.9rem;
+        color: #555;
+    }
+
+    /* Cột 4: Nút Actions (Dropdown) */
+    .cell-actions .dropdown-toggle::after {
+        display: none; /* Ẩn mũi tên mặc định */
+    }
+    .cell-actions .btn-actions {
+        background: transparent;
+        border: none;
+        color: #777;
+        font-size: 1.1rem;
+    }
+    .cell-actions .dropdown-menu {
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        border: 1px solid #eee;
+    }
+</style>
+{% endblock %}
+
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <div class="row mb-3">
+        <div class="col-md-8">
+            <h3>Danh sách Nhân viên ({{ employees.count }})</h3>
+
+            <form method="GET" action="{% url 'employee_list' %}" class="d-flex" style="max-width: 400px; gap: 10px;">
+                <input
+                    type="text"
+                    name="q"
+                    class="form-control"
+                    placeholder="Tìm tên, mã NV, SĐT..."
+                    value="{{ search_query|default:'' }}"
+                >
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+        </div>
+
+        <div class="col-md-4 d-flex justify-content-end align-items-start">
+            <a href="{% url 'add_employee' %}" class="btn btn-primary shadow-sm">
+                <i class="fas fa-plus"></i> Thêm Nhân viên mới
+            </a>
+        </div>
+    </div>
+
+    <div class="employee-list-container">
+        <table class="table table-employee-list">
+            <thead>
+                <tr>
+                    <th>Employee</th>
+                    <th>Position</th>
+                    <th>Ngày vào làm</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for emp in employees %}
+                <tr>
+                    <td class="cell-employee">
+                        <div class="employee-avatar">
+                            {% if emp.avatar %}
+                                <img src="{{ emp.avatar.url }}" alt="Avatar">
+                            {% else %}
+                                <img src="{% static 'avatar_default.jpg' %}" alt="Avatar"> {% endif %}
+                        </div>
+                        <div class="employee-info">
+                            <a href="{% url 'hr_view_profile' pk=emp.pk %}" class="employee-name" title="Xem chi tiết hồ sơ">
+                                {{ emp.full_name }}
+                            </a>
+                            <span class="employee-id">{{ emp.employee_id }} | {{ emp.department.name|default:"-" }}</span>
+                        </div>
+                    </td>
+
+                    <td class="cell-position">
+                        {% with latest_contract=emp.hop_dong.all.0 %}
+                            <div class="position-title">{{ emp.position.name|default:"-" }}</div>
+                            {% if latest_contract.basic_salary %}
+                                <div class="position-salary">{{ latest_contract.basic_salary|intcomma }} VND</div>
+                            {% endif %}
+                        {% endwith %}
+                    </td>
+
+                    <td class="cell-date">
+                        {{ emp.started_date|date:"d/m/Y" }}
+                    </td>
+
+                    <td class="text-center cell-actions">
+                        <div class="dropdown">
+                            <button class="btn btn-actions dropdown-toggle" type="button" id="dropdownMenuButton-{{ emp.pk }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-h"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton-{{ emp.pk }}">
+                                <a class="dropdown-item" href="{% url 'hr_view_profile' pk=emp.pk %}">
+                                    <i class="fas fa-eye fa-fw mr-2"></i>Xem hồ sơ
+                                </a>
+                                <a class="dropdown-item" href="{% url 'edit_employee' pk=emp.pk %}">
+                                    <i class="fas fa-edit fa-fw mr-2"></i>Chỉnh sửa
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item text-danger" href="{% url 'delete_employee' pk=emp.pk %}">
+                                    <i class="fas fa-trash fa-fw mr-2"></i>Xóa
+                                </a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center p-4">
+                        {% if search_query %}
+                            Không tìm thấy nhân viên nào khớp với từ khóa "{{ search_query }}".
+                        {% else %}
+                            Chưa có nhân viên nào trong hệ thống.
+                            <a href="{% url 'add_employee' %}" class="d-block mt-2">Thêm nhân viên ngay</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

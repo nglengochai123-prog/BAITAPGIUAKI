@@ -1,0 +1,255 @@
+{% extends base_layout %}
+{% load static %}
+
+{% block title %}Hồ sơ Nhân viên{% endblock %}
+
+{% block extrastyle %}
+<style>
+    /* ... (Toàn bộ CSS của bạn vẫn giữ nguyên, tôi không thay đổi) ... */
+    /* ------------------------------------------- */
+    /* CSS TÙY CHỈNH CHO TRANG HỒ SƠ (DỰA TRÊN ẢNH) */
+    /* ------------------------------------------- */
+
+    /* Nền chính cho khu vực nội dung (màu xanh nhạt như ảnh) */
+    .profile-container {
+        background-color: #f7f9fc; /* Màu nền xanh xám rất nhạt */
+        padding: 25px;
+        border-radius: 10px;
+    }
+
+    /* --- Menu Điều Hướng Bên Trái --- */
+    .profile-nav .nav-link {
+        background-color: #e9ecef; /* Màu tab không active (xám nhạt) */
+        color: #495057;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+    }
+    
+    .profile-nav .nav-link:hover {
+        background-color: #dee2e6;
+    }
+
+    /* Màu tab active (màu vàng như ảnh) */
+    .profile-nav .nav-link.active {
+        background-color: #ffc107; /* Bootstrap yellow */
+        color: #212529; /* Chữ đen trên nền vàng */
+        font-weight: 600;
+    }
+
+    /* --- Thẻ Nội Dung Bên Phải --- */
+    .profile-card {
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    
+    /* Thẻ Tổng quan (giống ảnh) */
+    .profile-summary-card {
+        text-align: center;
+        position: relative;
+    }
+
+    .profile-avatar {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 20px;
+        border: 4px solid #f0f0f0;
+    }
+
+    .profile-summary-card h3 { /* Tên nhân viên */
+        font-size: 1.75rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    .profile-summary-card .detail-group {
+        margin-top: 25px;
+    }
+
+    .profile-summary-card .detail-label {
+        color: #888; /* Chữ xám mờ cho tiêu đề */
+        font-size: 0.9rem;
+        margin-bottom: 0;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .profile-summary-card .detail-value {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #333; /* Chữ đen đậm cho giá trị */
+    }
+
+    /* Nút Edit (giống ảnh) */
+    .edit-icon-btn {
+        position: absolute;
+        top: 20px;
+        right: 25px;
+        font-size: 1.3rem;
+        color: #555;
+    }
+    
+    /* CSS cho các tab chi tiết (căn trái) */
+    .profile-detail-card {
+        text-align: left;
+    }
+    .profile-detail-card h5 {
+        color: #007bff; /* Màu primary của base */
+        font-weight: 600;
+    }
+    .profile-detail-card p {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+    .profile-detail-card p strong {
+        min-width: 180px;
+        display: inline-block;
+        color: #555;
+    }
+</style>
+{% endblock %}
+
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" style="background-color: transparent; padding-left: 0;">
+            <li class="breadcrumb-item"><a href="{% url 'welcome_employee' %}">Dashboard</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Hồ sơ của tôi</li>
+        </ol>
+    </nav>
+
+    <div class="profile-container">
+        <div class="row">
+            
+            <div class="col-md-3">
+                <div class="nav flex-column nav-pills profile-nav" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <a class="nav-link active" id="v-pills-summary-tab" data-toggle="pill" href="#v-pills-summary" role="tab" aria-controls="v-pills-summary" aria-selected="true">Tổng quan</a>
+                    <a class="nav-link" id="v-pills-personal-tab" data-toggle="pill" href="#v-pills-personal" role="tab" aria-controls="v-pills-personal" aria-selected="false">Thông tin cá nhân</a>
+                    <a class="nav-link" id="v-pills-contact-tab" data-toggle="pill" href="#v-pills-contact" role="tab" aria-controls="v-pills-contact" aria-selected="false">Thông tin liên hệ</a>
+                    <a class="nav-link" id="v-pills-job-tab" data-toggle="pill" href="#v-pills-job" role="tab" aria-controls="v-pills-job" aria-selected="false">Thông tin công việc</a>
+                    <a class="nav-link" id="v-pills-finance-tab" data-toggle="pill" href="#v-pills-finance" role="tab" aria-controls="v-pills-finance" aria-selected="false">Thuế & BHXH</a>
+                    <a class="nav-link" id="v-pills-contracts-tab" data-toggle="pill" href="#v-pills-contracts" role="tab" aria-controls="v-pills-contracts" aria-selected="false">Hợp đồng</a>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <div class="tab-content" id="v-pills-tabContent">
+                    
+                    <div class="tab-pane fade show active" id="v-pills-summary" role="tabpanel" aria-labelledby="v-pills-summary-tab">
+                        <div class="profile-card profile-summary-card">
+
+                            {% if employee.avatar %}
+                                <img src="{{ employee.avatar.url }}" alt="Avatar" class="profile-avatar">
+                            {% else %}
+                                <img src="{% static 'avatar1.jpg' %}" alt="Avatar" class="profile-avatar">
+                            {% endif %}
+
+                            <h3>{{ employee.full_name }}</h3>
+
+                            <div class="row mt-4">
+                                <div class="col-md-4 detail-group">
+                                    <p class="detail-label">Phòng ban</p>
+                                    <p class="detail-value">{{ employee.department.name|default:"Chưa cập nhật" }}</p>
+                                </div>
+                                <div class="col-md-4 detail-group">
+                                    <p class="detail-label">Chức vụ</p>
+                                    <p class="detail-value">{{ employee.position.name|default:"Chưa cập nhật" }}</p>
+                                </div>
+                                <div class="col-md-4 detail-group">
+                                    <p class="detail-label">Mã nhân viên</p>
+                                    <p class="detail-value">{{ employee.employee_id }}</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-6 detail-group">
+                                    <p class="detail-label">Quản lý trực tiếp</p>
+                                    <p class="detail-value">{{ employee.manager.full_name|default:"-" }}</p>
+                                </div>
+                                <div class="col-md-6 detail-group">
+                                    <p class="detail-label">Ngày vào làm</p>
+                                    <p class="detail-value">{{ employee.started_date|date:"d/m/Y" }}</p>
+                                </div>
+                                </div>
+
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="v-pills-personal" role="tabpanel" aria-labelledby="v-pills-personal-tab">
+                         <div class="profile-card profile-detail-card">
+                            <h5>Thông tin cá nhân</h5>
+                            <hr>
+                            <p><strong>Họ và tên:</strong> {{ employee.full_name }}</p>
+                            <p><strong>Ngày sinh:</strong> {{ employee.dob|date:"d/m/Y"|default:"Chưa cập nhật" }}</p>
+                            <p><strong>Giới tính:</strong> {{ employee.gender|default:"Chưa cập nhật" }}</p>
+                            <hr>
+                            <p><strong>Số CMND/CCCD:</strong> {{ employee.cic|default:"Chưa cập nhật" }}</p>
+                            </div>
+                    </div>
+                    
+                    <div class="tab-pane fade" id="v-pills-contact" role="tabpanel" aria-labelledby="v-pills-contact-tab">
+                         <div class="profile-card profile-detail-card">
+                            <h5>Thông tin liên hệ</h5>
+                            <hr>
+                            <p><strong>Số điện thoại:</strong> {{ employee.phone_number|default:"Chưa cập nhật" }}</p>
+                            <p><strong>Địa chỉ:</strong> {{ employee.address|default:"Chưa cập nhật" }}</p>
+                         </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="v-pills-job" role="tabpanel" aria-labelledby="v-pills-job-tab">
+                         <div class="profile-card profile-detail-card">
+                            <h5>Thông tin công việc</h5>
+                            <hr>
+                            <p><strong>Mã nhân viên:</strong> {{ employee.employee_id }}</p>
+                            <p><strong>Phòng ban:</strong> {{ employee.department.name|default:"-" }}</p>
+                            <p><strong>Chức vụ:</strong> {{ employee.position.name|default:"-" }}</p>
+                            <p><strong>Quản lý trực tiếp:</strong> {{ employee.manager.full_name|default:"-" }}</p>
+                            <p><strong>Ngày bắt đầu làm việc:</strong> {{ employee.started_date|date:"d/m/Y" }}</p>
+                            </div>
+                    </div>
+                    
+                    <div class="tab-pane fade" id="v-pills-finance" role="tabpanel" aria-labelledby="v-pills-finance-tab">
+                         <div class="profile-card profile-detail-card">
+                            <h5>Thông tin Thuế & BHXH</h5>
+                            <hr>
+                            <p>Chưa cập nhật thông tin.</p>
+                         </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="v-pills-contracts" role="tabpanel" aria-labelledby="v-pills-contracts-tab">
+                         <div class="profile-card profile-detail-card">
+                            <h5>Lịch sử Hợp đồng</h5>
+                            <hr>
+                            
+                            {% for hop_dong in employee.hop_dong.all %}
+                                <div class="mb-3 p-3 border rounded" style="background-color: #fcfcfc;">
+                                    <strong>Số HĐ: {{ hop_dong.contract_number }}</strong> 
+                                    <span class="badge badge-info">{{ hop_dong.contract_type }}</span>
+                                    
+                                    <p class="mb-0 mt-2"><strong>Hiệu lực:</strong> {{ hop_dong.started_date|date:"d/m/Y" }} - {% if hop_dong.ended_date %}{{ hop_dong.ended_date|date:"d/m/Y" }}{% else %}Vô thời hạn{% endif %}</p>
+                                    <p class="mb-0"><strong>Lương cơ bản:</strong> {{ hop_dong.basic_salary }} VND</p>
+                                    
+                                    {% if hop_dong.file_scan %}
+                                        <a href="{{ hop_dong.file_scan.url }}" target="_blank" class="btn btn-sm btn-outline-primary mt-2">
+                                            <i class="fas fa-download"></i> Xem File
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            {% empty %}
+                                <p>Chưa có thông tin hợp đồng.</p>
+                            {% endfor %}
+                         </div>
+                    </div>
+
+                </div>
+                </div>
+        </div>
+    </div>
+    
+{% endblock %}
