@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Tiêu đề trang (cho phép các trang con ghi đè) -->
-    <title>{% block title %}Hệ thống Quản lý Nhân sự{% endblock %}</title>
+    <title>{% block title %}Hệ thống tuyển dụng dành cho Ứng viên{% endblock %}</title>
 
     <!-- Link Bootstrap CSS (Cần thiết cho Navbar và Dropdown) -->
     <!-- (Thay thế bằng CDN hoặc đường dẫn static nếu bạn đã tải về) -->
@@ -40,75 +40,24 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav mx-auto" style="display:flex;justify-content:space-around;width:50%;">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-dark" href="#" id="tdDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <strong><i class="fa-solid fa-briefcase"></i> Tuyển dụng</strong> </a>
 
-                <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle text-dark" href="#" id="hosoDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <strong>Quản lý Hồ sơ Nhân viên</strong>
-    </a>
-    <div class="dropdown-menu" aria-labelledby="hosoDropdown">
+            <div class="dropdown-menu dropdown-menu-custom" aria-labelledby="tdDropdown">
 
-        <a class="dropdown-item" href="{% url 'employee_list' %}">Danh sách Nhân viên</a>
+                <a class="dropdown-item" href="{% url 'recruitment_home' %}">
+                    <i class="fa-solid fa-chart-line"></i> Bảng điều khiển
+                </a>
+                <a class="dropdown-item" href="{% url 'all_job_postings' %}">
+                    <i class="fa-solid fa-list-check"></i> Bài đăng tuyển dụng
+                </a>
+                <a class="dropdown-item" href="{% url 'candidate_apply' %}">
+                    <i class="fa-solid fa-file-lines"></i> Form ứng tuyển
+                </a>
 
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#">Báo cáo Hồ sơ</a>
-    </div>
-</li>
-
-                <!-- Các Navigation Item khác -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-dark" href="#" id="tdDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <strong>Tuyển dụng</strong>
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="tdDropdown">
-                        <a class="dropdown-item" href="{% url 'all_recruitment_requests_manager' %}">Gửi yêu cầu tuyển dụng</a>
-                    </div>
-                </li>
-
-            </ul>
-
-            <!-- Phần Tài khoản và Thông báo (Bên phải ngoài cùng) -->
-            <ul class="navbar-nav ml-auto">
-                {% if user.is_authenticated %}
-                    <!-- Biểu tượng thông báo -->
-                    <li class="nav-item d-flex align-items-center">
-                        <a class="nav-link d-flex align-items-center position-relative" href="#" title="Thông báo" style="padding-top: 0; padding-bottom: 0;">
-                            <i class="fa fa-bell text-primary" style="font-size: 22px;"></i>
-                            <span class="badge badge-danger position-absolute" style="top: 0; right: 0; font-size: 10px;">3</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdownUser" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="gap:10px;">
-
-        {% if request.user.is_authenticated and request.user.employee and request.user.employee.avatar %}
-            <img src="{{ request.user.employee.avatar.url }}" alt="Avatar" class="avatar-img"
-                 style="height:55px; width:55px; display:block; border-radius: 50%; object-fit: cover;">
-        {% else %}
-            <img src="{% static 'avatar1.jpg' %}" alt="Avatar" class="avatar-img"
-                 style="height:55px; width:55px; display:block; border-radius: 50%;">
-        {% endif %}
-
-        <span class="text-primary font-weight-bold">{{ request.user.username|default:"Tài khoản" }}</span>
-    </a>
-    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownUser">
-
-        {% if request.user.employee %}
-            <a class="dropdown-item" href="{% url 'hr_view_profile' pk=request.user.employee.pk %}">
-                Hồ sơ cá nhân
-            </a>
-        {% else %}
-            <a class="dropdown-item" href="/admin/">Trang Admin</a>
-        {% endif %}
-
-        <div class="dropdown-divider"></div>
-        <form action="{% url 'logout' %}" method="post" style="margin: 0;"> {% csrf_token %} <button type="submit" class="dropdown-item">Đăng xuất</button></form>
-    </div>
-</li>
-                {% endif %}
-            </ul>
-        </div>
+            </div>
+        </li>
     </nav>
 </header>
 
@@ -134,21 +83,6 @@
 </main>
 
 <!-- FOOTER -->
-<!--
-<footer class="footer-custom mt-5 py-3 border-top">
-    <div class="container">
-        <div class="row justify-content-between">
-            <p class="text-center mb-1">
-                <a href="/about" class="text-secondary mx-2">Về chúng tôi</a> |
-                <a href="/policy" class="text-secondary mx-2">Trang Chính sách</a>
-            </p>
-            <p class="text-center text-muted mb-0">
-                &copy; 2024 [Tên Công ty của bạn]. Copyright.
-            </p>
-        </div>
-    </div>
-</footer>
--->
 <footer class="footer-custom mt-5 py-3 border-top">
   <div class="container-fluid px-5">
     <div class="row justify-content-between">
@@ -156,13 +90,6 @@
       <div class="col-md-4">
           <h5><strong>HR System</strong></h5>
         <p>Empowering your workplace with smart management</p>
-          <!--
-        <div class="d-flex gap-3">
-          <a href="#"><i class="fab fa-facebook"></i></a>
-          <a href="#"><i class="fab fa-instagram"></i></a>
-          <a href="#"><i class="fab fa-twitter"></i></a>
-        </div>
-        -->
         <p class="mt-2 mb-0"><i class="fas fa-map-marker-alt"></i> 71 Ngũ Hành Sơn, Đà Nẵng</p>
         <p class="mb-0"><i class="fas fa-envelope"></i> hrsystem@gmail.com</p>
         <p><i class="fas fa-phone"></i> 032 5657 642</p>

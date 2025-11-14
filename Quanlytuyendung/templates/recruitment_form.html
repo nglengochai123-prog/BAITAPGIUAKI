@@ -3,25 +3,26 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
-<div class="container-fluid">
-    <h1>{{ title }}</h1>
-
-    <!-- 
-        Thiết lập method="post" để gửi dữ liệu [20]
-        Lưu ý: Bạn có thể cần thêm enctype="multipart/form-data" 
-        nếu Model này có trường FileField/ImageField, nhưng ở đây không cần [21, 22].
-    -->
-    <form method="post">
-        <!-- BẮT BUỘC: Bảo mật CSRF -->
-        {% csrf_token %} 
-
-        <!-- Hiển thị Form sử dụng phương thức as_p (hoặc as_table, as_ul) [23] -->
-        {{ form.as_p }}
-
-        <!-- Nút Submit [17, 24] -->
-        <button type="submit" class="btn btn-primary">Tạo Bài Đăng</button>
-    </form>
-
-         
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg border-0 rounded-3">
+                <div class="card-header bg-primary text-white text-center py-3">
+                    <h4 class="mb-0">{{ title }}</h4>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <div class="text-center mt-3">
+                            <button type="submit" class="btn btn-success px-4">
+                                <i class="bi bi-plus-circle"></i> Tạo Bài Đăng
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

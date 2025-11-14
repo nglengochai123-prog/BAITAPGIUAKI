@@ -1,0 +1,58 @@
+{% extends "sidebar_content.html" %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block page_content %}
+<div class="container-fluid mt-3">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>{{ page_title }}</h2>
+        <a href="{% url 'project_create' %}" class="btn btn-primary">
+            + Tạo Dự án mới
+        </a>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            {% if project_list %}
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Tên Dự Án</th>
+                            <th>Ngày Bắt Đầu</th>
+                            <th>Ngày Kết Thúc Dự Kiến</th>
+                            <th>Mô Tả Ngắn</th>
+                            <th>Thao Tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for project in project_list %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ project.name }}</td>
+                                <td>{{ project.started_date|date:"d/m/Y" }}</td>
+                                <td>
+                                    {% if project.ended_date %}
+                                        {{ project.ended_date|date:"d/m/Y" }}
+                                    {% else %}
+                                        Chưa xác định
+                                    {% endif %}
+                                </td>
+                                <td>{{ project.description|truncatechars:100 }}</td>
+                                <td>
+                                    <!-- Nút xem chi tiết/chỉnh sửa -->
+                                    <a href="#" class="btn btn-sm btn-info">Chi tiết</a> 
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="alert alert-info" role="alert">
+                    <p>Chưa có dự án nào được tạo. Hãy tạo một dự án mới!</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock page_content %}

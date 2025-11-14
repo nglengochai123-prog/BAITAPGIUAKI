@@ -45,7 +45,9 @@
                             <i class="fas fa-check-to-slot"></i> Yêu cầu Cập nhật
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Báo cáo Hồ sơ</a>
+                        <a class="dropdown-item" href="{% url 'hr_training_list' %}" style="color: #007bff; font-weight: 500;">
+                            <i class="fas fa-graduation-cap"></i> Duyệt Yêu cầu Đào tạo
+                        </a>
                     </div>
                 </li>
 
@@ -54,12 +56,12 @@
                         <strong> Hiệu suất - Khen thưởng</strong>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="KPIDropdown">
-                        <a class="dropdown-item" href="#">Hiệu suất làm việc</a>
-                        <a class="dropdown-item" href="#">Khen thưởng</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{% url 'hr_training_list' %}" style="color: #007bff; font-weight: 500;">
-                            <i class="fas fa-graduation-cap"></i> Duyệt Yêu cầu Đào tạo
-                        </a>
+                        <a class="dropdown-item" href="{% url 'project_list' %}">Quản Lý Dự Án</a>
+                        <a class="dropdown-item" href="{% url 'criteria_list' %}">Danh Mục Tiêu Chí</a>
+                        <hr class="my-2">
+                        <a class="dropdown-item" href="{% url 'reward_list' %}">Danh Sách Khen Thưởng</a>
+                        <a class="dropdown-item" href="{% url 'reward_announce_list' %}">Thông Báo Khen Thưởng</a>
+                        <a class="dropdown-item" href="{% url 'reward_suggest_list' %}">Lịch Sử Đề Xuất</a>
                     </div>
                 </li>
 
@@ -68,9 +70,12 @@
                         <strong>Tuyển dụng</strong>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="tdDropdown">
-                        <a class="dropdown-item" href="#">Bài đăng tuyển dụng</a>
-                        <a class="dropdown-item" href="#">Form Tuyển dụng</a>
-                        <a class="dropdown-item" href="#">Quản lý tuyển dụng</a>
+                        <a class="dropdown-item" href="{% url 'quanly_tuyendung' %}">Quản lý tuyển dụng</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'all_job_postings_hr' %}">Bài đăng tuyển dụng</a>
+                        <a class="dropdown-item" href="{% url 'manage_status' %}">Trạng thái ứng tuyển</a>
+                        <a class="dropdown-item" href="{% url 'add_skill' %}">Quản lý kỹ năng</a>
+                        <a class="dropdown-item" href="{% url 'manage_requests_hr' %}">Xét duyệt yêu cầu tuyển dụng</a>
                     </div>
                 </li>
 
@@ -79,7 +84,7 @@
                         <strong>Tính lương</strong>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="tlDropdown">
-                        <a class="dropdown-item" href="#">Bảng chấm công</a>
+                        <a class="dropdown-item" href="{% url 'payroll_management_view' %}">Tính lương</a>
                         <a class="dropdown-item" href="#">Hệ số lương</a>
                     </div>
                 </li>

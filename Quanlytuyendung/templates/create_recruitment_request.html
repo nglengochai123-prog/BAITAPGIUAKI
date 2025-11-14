@@ -1,0 +1,28 @@
+{% extends 'basemanager.html' %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="card shadow border-0">
+    <div class="card-header bg-primary text-white">
+      <h4 class="mb-0">Gửi Yêu cầu Tuyển dụng</h4>
+    </div>
+
+    <div class="card-body">
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+
+      <form method="post" novalidate>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="text-end mt-3">
+          <button type="submit" class="btn btn-success">Gửi yêu cầu</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

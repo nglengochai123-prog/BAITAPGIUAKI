@@ -1,0 +1,232 @@
+{% extends 'base.html' %}
+{% block title %}Chỉnh sửa trạng thái{% endblock %}
+
+{% block content %}
+<style>
+/* CARD WRAPPER */
+.status-card {
+    max-width: 1300px;
+    margin: 30px auto;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 6px 25px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+/* HEADER BLUE */
+.status-header {
+    background: #1557d6;
+    padding: 25px 40px;
+    color: white;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+/* CONTENT */
+.status-body {
+    padding: 40px;
+}
+
+/* TABLE */
+.table {
+    border: none !important;
+    width: 100%;
+}
+
+.table th {
+    background: none !important;
+    border: none !important;
+    font-size: 17px;
+    text-align: left;
+    padding-bottom: 12px;
+}
+
+.table td {
+    border: none !important;
+    padding-right: 25px;
+    padding-left: 0;
+    width: 20%;                     /* GIỮ 5 CỘT ĐỀU NHAU */
+}
+
+/* SELECT BOX */
+.form-select {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    border-radius: 12px;
+    border: 1px solid #d1d7e5;
+}
+
+/* FOOTER BUTTONS */
+.status-footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 40px 40px;
+}
+
+.btn-back {
+    background: #374151;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 10px;
+    font-size: 17px;
+    font-weight: 600;
+    border: none;
+}
+
+.btn-back:hover {
+    background: #1f2937;
+}
+
+.btn-save {
+    background: #10b981;
+    color: white;
+    padding: 12px 28px;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 700;
+    border: none;
+}
+
+.btn-save:hover {
+    background: #059669;
+}
+</style>
+
+
+
+<div class="status-card">
+
+    <!-- BLUE HEADER -->
+    <div class="status-header">
+        Chỉnh sửa trạng thái cho: {{ candidate.fullname }}
+    </div>
+
+    <div class="status-body">
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <table class="table status-table">
+            <thead>
+                <tr>
+                    <th>Trạng thái hồ sơ</th>
+                    <th>Kết quả phỏng vấn</th>
+                    <th>Trạng thái Offer</th>
+                    <th>Trạng thái Đào tạo</th>
+                    <th>Trạng thái Chính thức</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+
+                    <td>
+                        <select name="review_status" id="review_status" class="form-select" required>
+                            <option value="">-- Chọn --</option>
+                            <option value="APPLIED"  {% if candidate.review_status == "APPLIED"  %}selected{% endif %}>Ứng tuyển</option>
+                            <option value="SCREENING" {% if candidate.review_status == "SCREENING" %}selected{% endif %}>Sàng lọc</option>
+                            <option value="PASSED"    {% if candidate.review_status == "PASSED"    %}selected{% endif %}>Đạt</option>
+<option value="FAILED"    {% if candidate.review_status == "FAILED"    %}selected{% endif %}>Không đạt</option>
+                        </select>
+                    </td>
+
+                    <td>
+                        <select name="interview_result" id="interview_result" class="form-select"
+                            {% if candidate.review_status != "PASSED" %}disabled{% endif %}>
+                            <option value="">-- Chọn --</option>
+                            <option value="PASSED"   {% if candidate.interview_result == "PASSED"   %}selected{% endif %}>Đạt</option>
+                            <option value="FAILED"   {% if candidate.interview_result == "FAILED"   %}selected{% endif %}>Không đạt</option>
+                        </select>
+                    </td>
+
+                    <td>
+                        <select name="offer_status" id="offer_status" class="form-select"
+                            {% if candidate.interview_result != "PASSED" %}disabled{% endif %}>
+                            <option value="">-- Chọn --</option>
+                            <option value="ACCEPTED" {% if candidate.offer_status == "ACCEPTED" %}selected{% endif %}>Ứng viên đồng ý</option>
+                            <option value="REJECTED" {% if candidate.offer_status == "REJECTED" %}selected{% endif %}>Ứng viên từ chối</option>
+                            <option value="EXPIRED"  {% if candidate.offer_status == "EXPIRED"  %}selected{% endif %}>Quá hạn</option>
+                        </select>
+                    </td>
+
+                    <td>
+                        <select name="training_status" id="training_status" class="form-select"
+                            {% if candidate.offer_status != "ACCEPTED" %}disabled{% endif %}>
+                            <option value="">-- Chọn --</option>
+                            <option value="PASSED" {% if candidate.training_status == "PASSED" %}selected{% endif %}>Đạt</option>
+                        </select>
+                    </td>
+
+                    <td>
+                        <select name="official_status" id="official_status" class="form-select"
+                            {% if candidate.training_status != "PASSED" %}disabled{% endif %}>
+                            <option value="">-- Chọn --</option>
+                            <option value="PASSED" {% if candidate.official_status == "PASSED" %}selected{% endif %}>Đạt</option>
+                        </select>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+
+
+            <div class="status-footer">
+                <a href="{% url 'manage_status' %}" class="btn-back">← Quay lại</a>
+                <button type="submit" class="btn-save">💾 Lưu thay đổi</button>
+            </div>
+
+        </form>
+    </div>
+
+</div>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const review = document.getElementById("review_status");
+const interview = document.getElementById("interview_result");
+    const offer = document.getElementById("offer_status");
+    const training = document.getElementById("training_status");
+    const official = document.getElementById("official_status");
+
+    function updateState() {
+
+        if (review.value === "PASSED") {
+            interview.disabled = false;
+        } else {
+            interview.disabled = true; interview.value = "";
+            offer.disabled = true; offer.value = "";
+            training.disabled = true; training.value = "";
+            official.disabled = true; official.value = "";
+        }
+
+        if (interview.value === "PASSED" && !interview.disabled) {
+            offer.disabled = false;
+        } else {
+            offer.disabled = true; offer.value = "";
+            training.disabled = true; training.value = "";
+            official.disabled = true; official.value = "";
+        }
+
+        if (offer.value === "ACCEPTED" && !offer.disabled) {
+            training.disabled = false;
+        } else {
+            training.disabled = true; training.value = "";
+            official.disabled = true; official.value = "";
+        }
+
+        if (training.value === "PASSED" && !training.disabled) {
+            official.disabled = false;
+        } else {
+            official.disabled = true; official.value = "";
+        }
+    }
+
+    [review, interview, offer, training].forEach(s => s.addEventListener("change", updateState));
+    updateState();
+});
+</script>
+
+{% endblock %}

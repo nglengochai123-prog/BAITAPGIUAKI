@@ -1,0 +1,128 @@
+{% extends 'basemanager.html' %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<style>
+/* Nút CHỈNH SỬA màu xanh */
+.btn-edit-request {
+    background-color: #2563eb;   /* xanh */
+    border: none;
+    border-radius: 8px;
+    padding: 8px 18px;
+    font-weight: 600;
+    color: #fff;
+    font-size: 14px;
+}
+
+.btn-edit-request:hover {
+    background-color: #1d4ed8;
+    color: #fff;
+}
+
+/* Nút XÓA YÊU CẦU màu đỏ + icon */
+.btn-delete-request {
+    background-color: #ef4444;   /* đỏ */
+    border: none;
+    border-radius: 8px;
+    padding: 8px 18px;
+    font-weight: 600;
+    color: #fff;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;                    /* khoảng cách icon – chữ */
+}
+
+.btn-delete-request:hover {
+    background-color: #dc2626;
+    color: #fff;
+}
+
+/* Bỏ viền/outline khi focus để không bị “lồi” */
+.btn-edit-request:focus,
+.btn-delete-request:focus {
+    outline: none;
+    box-shadow: none;
+}
+.btn-group-space {
+    display: flex;
+    justify-content: end;
+    gap: 10px;   /* chỉnh khoảng cách tùy ý */
+}
+</style>
+
+<div class="container my-5">
+    <h1 class="text-center fw-bold mb-3">{{ title }}</h1>
+    <p class="text-center text-muted mb-5">Gửi yêu cầu tuyển dụng và quản lý yêu cầu đã gửi</p>
+
+    <div class="row">
+        <!-- Cột trái: Form gửi yêu cầu -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm p-4">
+                <h5 class="fw-bold mb-3">Gửi Yêu Cầu Tuyển Dụng</h5>
+                <form method="post">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="mb-3">
+                            <label class="form-label">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.errors %}
+                                <div class="text-danger small">{{ field.errors }}</div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-primary w-100">
+                        Gửi Yêu Cầu
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Cột phải: Danh sách yêu cầu đã gửi -->
+        <div class="col-md-8">
+            <div class="card shadow-sm p-4">
+                <h5 class="fw-bold mb-4">Danh Sách Yêu Cầu Đã Gửi ({{ all_requests.count }})</h5>
+
+                {% for request in all_requests %}
+                <div class="border rounded p-3 mb-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="fw-bold">{{ request.request_name }}</h5>
+                        <span class="badge
+                            {% if request.request_status == "CONSIDERING" %} bg-warning
+                            {% elif request.request_status == "ACCEPTED" %} bg-success
+                            {% else %} bg-danger
+                            {% endif %}"> {{ request.get_request_status_display }}
+                        </span>
+                    </div>
+
+                    <p class="text-muted mb-1">
+                        {{ request.department }} | {{ request.recruitment_position }} | {{ request.date_requested|date:"d/m/Y" }}
+                    </p>
+                    <p>{{ request.reason|truncatechars:100 }}</p>
+
+                    <div class="btn-group-space">
+                        <a href="{% url 'edit_recruitment_request' request.id %}" class="btn btn-edit-request">
+                            Chỉnh sửa
+                        </a>
+
+                        <form action="{% url 'delete_recruitment_request' request.id %}" method="post"
+                              onsubmit="return confirm('Bạn có chắc muốn xóa yêu cầu này không?');">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-delete-request">
+                                🗑️ Xóa yêu cầu
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+                {% empty %}
+                    <p class="text-center text-muted mb-0">Chưa có yêu cầu nào được gửi.</p>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -3,7 +3,6 @@ from Quanlyhoso.models import Employee
 
 class Project(models.Model):
     name = models.CharField(max_length=500, verbose_name='Tên Dự Án')
-    led_project = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='led_projects')
     employee = models.ManyToManyField(Employee, through='ProjectEmployee', related_name='employee_projects')
     description = models.TextField(verbose_name='Mô tả', help_text='Nhập mô tả dự án')
     started_date = models.DateField(auto_now_add=True, verbose_name='Ngày bắt đầu')
@@ -18,21 +17,25 @@ class Project(models.Model):
 
 class ProjectEmployee(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, verbose_name='Mã Dự Án')
-    employee = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='project_assignments')
-    role = models.CharField(max_length=100, default='Thành viên', verbose_name='Vai trò')
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='project_assignments', verbose_name='Mã Nhân Viên')
+
+    class EmployeeRole(models.TextChoices):
+        LEADER = 'LEADER', 'Trưởng dự án'
+        MEMBER = 'MEMBER', 'Thành viên'
+
+    role = models.CharField(max_length=100, choices=EmployeeRole.choices, default=EmployeeRole.MEMBER, verbose_name='Vai trò')
     added_date = models.DateField(auto_now_add=True, verbose_name='Ngày tham gia')
 
     class Meta:
         verbose_name = 'Nhân viên thuộc dự án'
         verbose_name_plural = 'Danh sách nhân viên của dự án'
         unique_together=('project','employee','role')
-        ordering = ['-project','employee']
+        ordering = ['-project', '-role', 'employee']
 
     def __str__(self):
         return f'{self.project.name} - {self.employee.full_name}'
 
 class PerformanceCriteria(models.Model):
-    code = models.CharField(max_length=10, primary_key=True, verbose_name='Mã Tiêu Chí')
     name = models.CharField(max_length=255, verbose_name='Tên Tiêu Chí')
 
     class CriteriaType(models.TextChoices):
@@ -45,7 +48,7 @@ class PerformanceCriteria(models.Model):
     description = models.TextField(verbose_name='Mô tả chi tiết', help_text='Mô tả cách thức đánh giá và tính điểm.')
 
     def __str__(self):
-        return f"[{self.code}] {self.name}"
+        return {self.name}
 
     class Meta:
         verbose_name = 'Tiêu Chí Đánh Giá'
@@ -74,7 +77,7 @@ class ScoreDetail(models.Model):
     comment = models.TextField(blank=True, verbose_name='Nhận Xét')
 
     def __str__(self):
-        return f"{self.review.employee} - {self.criteria.code}: {self.score} điểm"
+        return f"{self.review.employee} - {self.criteria}: {self.score} điểm"
 
     class Meta:
         verbose_name = 'Chi Tiết Điểm Số'
@@ -118,6 +121,7 @@ class RewardSuggest(models.Model):
     reward_announce = models.ForeignKey(RewardAnnounce, on_delete=models.PROTECT, verbose_name='Thông báo áp dụng')
     reward_item = models.ForeignKey(Reward, on_delete=models.PROTECT, verbose_name='Hạng mục nhận thưởng')
     suggested_by = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='suggestions_made')
+    suggested_date = models.DateField(auto_now_add=True, verbose_name='Ngày đề xuất khen thưởng')
     description = models.TextField(verbose_name='Lí do khen thưởng', help_text='Nhập lí do khen thưởng')
 
     class SuggestStatus(models.TextChoices):

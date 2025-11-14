@@ -32,7 +32,48 @@
         <div class="card-header">
             {% if period %}<h2>2. Bảng Lương Đã Tính (Kỳ: {{ period.name }})</h2>{% else %}<h2>2. Bảng Lương Đã Tính</h2>{% endif %}
         </div>
+
         <div class="card-body">
+            {# ----- FILTER BAR: chèn ngay phía trên danh sách kết quả ----- #}
+            {% if period %}
+            <form method="get" class="form-inline mb-3">
+                {# giữ period để không mất khi submit filter #}
+                <input type="hidden" name="period" value="{{ period.id }}">
+
+                <div class="form-group mr-2">
+                    <input type="text" name="q" value="{{ request.GET.q|default_if_none:'' }}" class="form-control" placeholder="Tìm tên hoặc Mã NV">
+                </div>
+
+                <div class="form-group mr-2">
+                    <select name="component" class="form-control">
+                        <option value="">-- Tất cả thành phần lương --</option>
+                        {% for c in salary_components %}
+                            <option value="{{ c.id }}" {% if request.GET.component == c.id|stringformat:"s" %}selected{% endif %}>{{ c.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group mr-2">
+                    <select name="department" class="form-control">
+                        <option value="">-- Tất cả phòng ban --</option>
+                        {% for d in departments %}
+                            <option value="{{ d.id }}" {% if request.GET.department == d.id|stringformat:"s" %}selected{% endif %}>{{ d.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-outline-primary mr-2">Lọc</button>
+
+{# Nút Xuất Excel: dùng path param cho export và giữ các query params khác #}
+<a class="btn btn-success"
+   href="{% url 'export_payroll_excel' period.id %}{% if request.GET.q or request.GET.component or request.GET.department %}?{% if request.GET.q %}q={{ request.GET.q|urlencode }}&{% endif %}{% if request.GET.component %}component={{ request.GET.component }}&{% endif %}{% if request.GET.department %}department={{ request.GET.department }}{% endif %}{% endif %}">
+    📤 Xuất Excel (theo filter)
+</a>
+
+            </form>
+            {% endif %}
+            {# ----- end filter bar ----- #}
+
             {% if payroll_entries %}
                 <p>Danh sách <strong>{{ payroll_entries|length }}</strong> bảng lương đã được tính cho kỳ này:</p>
                 <ul class="list-group">
@@ -49,16 +90,20 @@
                             <div class="col-md-4 text-right">
                                 <div class="h6 text-danger">THỰC LĨNH</div>
                                 <div class="h4"><strong>{{ entry.received|floatformat:2 }} VND</strong></div>
-                                <a href="#" class="btn btn-sm btn-outline-info mt-2">Xem chi tiết</a>
+                                <a href="{% url 'payroll_detail_view' entry.id %}" class="btn btn-sm btn-outline-info mt-2">Xem chi tiết</a>
                             </div>
                         </div>
                     </li>
-                {% empty %}
-                    <p class="text-secondary">Chưa có bảng lương nào được tính cho kỳ này.</p>
                 {% endfor %}
                 </ul>
             {% else %}
-                <p>Không có dữ liệu bảng lương để hiển thị. Vui lòng chọn kỳ và thực hiện tính toán.</p>
+                <p class="text-secondary">
+                    {% if period %}
+                        Chưa có bảng lương nào được tính cho kỳ này.
+                    {% else %}
+                        Vui lòng chọn kỳ lương và thực hiện tính lương.
+                    {% endif %}
+                </p>
             {% endif %}
         </div>
     </div>

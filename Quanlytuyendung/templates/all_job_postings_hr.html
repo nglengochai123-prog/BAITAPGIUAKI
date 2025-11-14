@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<style>
+    /* Nút chỉnh sửa */
+    .btn-edit {
+        background-color: #007bff;  /* xanh dương */
+        color: #fff;
+        border: none;
+        padding: 4px 12px;
+        border-radius: 4px;
+        font-size: 14px;
+        transition: background-color 0.25s ease;
+    }
+    .btn-edit:hover {
+        background-color: #0069d9; /* đậm hơn khi hover */
+    }
+
+    /* Nút xóa */
+    .btn-delete {
+        background-color: #dc3545;  /* đỏ */
+        color: #fff;
+        border: none;
+        padding: 4px 12px;
+        border-radius: 4px;
+        font-size: 14px;
+        transition: background-color 0.25s ease;
+    }
+    .btn-delete:hover {
+        background-color: #b02a37;
+    }
+
+    /*Căn chỉnh hai nút cách nhau */
+    .action-buttons {
+        display: flex;
+        justify-content: flex-end;
+        gap: 5px; /* khoảng cách giữa hai nút */
+    }
+</style>
+
+
+<div class="container my-5">
+    <h1 class="text-center fw-bold mb-3">Tuyển Dụng</h1>
+    <p class="text-center text-muted mb-5">Đăng tin tuyển dụng và quản lý ứng viên</p>
+
+    <div class="row">
+        <!-- Cột trái: Form đăng tin -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm p-4">
+                <h5 class="fw-bold mb-3">Đăng Tin Tuyển Dụng</h5>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label"> Vị trí tuyển dụng</label>
+                        {{ form.title }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label"> Mức lương</label>
+                        {{ form.salary }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label"> Hình thức làm việc</label>
+                        {{ form.job_type }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label"> Trạng thái tuyển dụng</label>
+                        {{ form.status }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label"> Mô tả công việc</label>
+                        {{ form.content }}
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">
+                        Đăng Tin Tuyển Dụng
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Cột phải: Danh sách bài đăng -->
+        <div class="col-md-8">
+            <div class="card shadow-sm p-4">
+                <h5 class="fw-bold mb-4">Danh Sách Tuyển Dụng ({{ all_posts.count }})</h5>
+                {% for post in all_posts %}
+<div class="border rounded p-3 mb-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="fw-bold">{{ post.title }}</h5>
+                        {% if post.status == "OPEN" %}
+                            <span class="badge bg-success">Đang tuyển</span>
+                        {% else %}
+                            <span class="badge bg-secondary">Đã đóng</span>
+                        {% endif %}
+                    </div>
+
+                    <p class="text-muted mb-1">
+                         {{ post.salary }} |  {{ post.job_type }} |  {{ post.date_posted|date:"d/m/Y" }}
+                    </p>
+                    <p>{{ post.content|truncatechars:120 }}</p>
+
+                    <div class="d-flex justify-content-end gap-2">
+</div>
+<div class="action-buttons">
+    <a href="{% url 'edit_recruitment_post' post.pk %}" class="btn btn-sm btn-edit">
+        Chỉnh sửa
+    </a>
+
+    <a href="{% url 'delete_recruitment_post' post.pk %}" class="btn btn-sm btn-delete"
+       onclick="return confirm('Bạn có chắc muốn xóa bài đăng này không?');">
+       Xóa
+    </a>
+</div>
+                </div>
+                {% empty %}
+                    <p class="text-center text-muted mb-0">Hiện chưa có bài đăng nào.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

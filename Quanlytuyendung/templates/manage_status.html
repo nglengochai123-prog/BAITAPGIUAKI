@@ -1,0 +1,270 @@
+{% extends 'base.html' %}
+{% block title %}Quản lý trạng thái tuyển dụng{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #f8fafc;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 30px;
+        margin-bottom: 20px;
+    }
+
+    .page-header h2 {
+        font-weight: 700;
+        color: #0f172a;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .btn-add {
+        background-color: #2563eb;
+        color: white;
+        font-weight: 600;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        transition: background-color 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        text-decoration: none;
+    }
+
+    .btn-add:hover {
+        background-color: #1e40af;
+    }
+
+    .filter-bar {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        padding: 15px 20px;
+        margin-bottom: 25px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .filter-bar input,
+    .filter-bar select {
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        padding: 8px 12px;
+        font-size: 15px;
+        color: #374151;
+        outline: none;
+        transition: border-color 0.2s ease;
+    }
+
+    .filter-bar input:focus,
+    .filter-bar select:focus {
+        border-color: #2563eb;
+    }
+
+    .filter-bar input {
+        flex: 1;
+        min-width: 250px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+    }
+
+    thead {
+        background-color: #f1f5f9;
+    }
+
+    th, td {
+        text-align: center;
+        padding: 12px 15px;
+        font-size: 15px;
+    }
+
+    th {
+        font-weight: 700;
+        color: #1e293b;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f9fafb;
+    }
+
+    tr:hover {
+        background-color: #eef2ff;
+    }
+
+    .btn-action {
+        font-size: 13px;
+        padding: 6px 10px;
+        border-radius: 6px;
+        font-weight: 600;
+        text-decoration: none;
+        color: white;
+    }
+
+    .btn-view {
+        background-color: #0ea5e9;
+    }
+
+    .btn-edit {
+        background-color: #2563eb;
+    }
+
+.btn-delete {
+    background-color: #dc2626;
+    border: none;              /* bỏ viền mặc định */
+    outline: none;             /* bỏ viền khi focus */
+    box-shadow: none;          /* bỏ hiệu ứng lồi */
+}
+
+.btn-delete:hover {
+    background-color: #b91c1c;
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+
+    .btn-view:hover {
+        background-color: #0284c7;
+    }
+
+    .btn-edit:hover {
+background-color: #1e40af;
+    }
+
+    .btn-delete:hover {
+        background-color: #b91c1c;
+    }
+
+    .text-muted {
+        color: #9ca3af;
+        font-style: italic;
+    }
+</style>
+
+<div class="container mt-4">
+
+    <!-- Header -->
+    <div class="page-header">
+        <div>
+            <h2>Quản lý ứng viên</h2>
+            <p class="text-muted">Tổng số: {{ candidates|length }} ứng viên</p>
+        </div>
+    </div>
+
+    <!-- Filter bar -->
+<form method="get" class="filter-bar" id="filterForm">
+    <input type="text" name="keyword" placeholder="Tìm kiếm theo tên, email, số điện thoại..." value="{{ request.GET.keyword }}">
+
+    <select name="review_status">
+        <option value="">Tất cả hồ sơ</option>
+        <option value="APPLIED" {% if request.GET.review_status == "APPLIED" %}selected{% endif %}>Ứng tuyển</option>
+        <option value="SCREENING" {% if request.GET.review_status == "SCREENING" %}selected{% endif %}>Sàng lọc</option>
+        <option value="PASSED" {% if request.GET.review_status == "PASSED" %}selected{% endif %}>Đạt</option>
+        <option value="FAILED" {% if request.GET.review_status == "FAILED" %}selected{% endif %}>Không đạt</option>
+    </select>
+
+    <select name="interview_result">
+        <option value="">Tất cả phỏng vấn</option>
+        <option value="PASSED" {% if request.GET.interview_result == "PASSED" %}selected{% endif %}>Đạt</option>
+        <option value="FAILED" {% if request.GET.interview_result == "FAILED" %}selected{% endif %}>Không đạt</option>
+    </select>
+
+    <select name="offer_status">
+        <option value="">Tất cả offer</option>
+        <option value="ACCEPTED" {% if request.GET.offer_status == "ACCEPTED" %}selected{% endif %}>Ứng viên đồng ý</option>
+        <option value="REJECTED" {% if request.GET.offer_status == "REJECTED" %}selected{% endif %}>Ứng viên từ chối</option>
+        <option value="EXPIRED" {% if request.GET.offer_status == "EXPIRED" %}selected{% endif %}>Quá hạn không phản hồi</option>
+    </select>
+
+    <select name="training_status">
+        <option value="">Đào tạo</option>
+        <option value="PASSED" {% if request.GET.training_status == "PASSED" %}selected{% endif %}>Đạt</option>
+    </select>
+
+    <select name="official_status">
+        <option value="">Chính thức</option>
+        <option value="PASSED" {% if request.GET.official_status == "PASSED" %}selected{% endif %}>Đạt</option>
+    </select>
+</form>
+
+    <!-- Table -->
+    <table>
+        <thead>
+            <tr>
+                <th>Họ và tên</th>
+                <th>Ngày sinh</th>
+                <th>Vị trí</th>
+                <th>Trạng thái hồ sơ</th>
+                <th>Phỏng vấn</th>
+                <th>Offer</th>
+                <th>Đào tạo</th>
+                <th>Chính thức</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in candidates %}
+<tr>
+                <td>{{ c.fullname }}</td>
+                <td>{{ c.dob|date:"d/m/Y" }}</td>
+                <td>{{ c.apply_position }}</td>
+                <td>{{ c.get_review_status_display }}</td>
+                <td>{{ c.get_interview_result_display }}</td>
+                <td>{{ c.get_offer_status_display }}</td>
+                <td>{{ c.get_training_status_display }}</td>
+                <td>{{ c.get_official_status_display }}</td>
+                <td>
+                    <a href="{% url 'view_candidate' c.id %}" class="btn-action btn-view">Xem</a>
+                    <a href="{% url 'edit_status' c.id %}" class="btn-action btn-edit">Chỉnh sửa</a>
+                    <form action="{% url 'delete_candidate' c.id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-action btn-delete"
+                                onclick="return confirm('Bạn có chắc muốn xóa ứng viên này không?');">
+                            Xóa
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="9" class="text-muted text-center">Chưa có ứng viên nào.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const form = document.getElementById("filterForm");
+
+    // Khi thay đổi dropdown -> tự động submit
+    form.querySelectorAll("select").forEach(select => {
+        select.addEventListener("change", () => form.submit());
+    });
+
+    // Ô tìm kiếm chỉ submit khi nhấn Enter
+    const keywordInput = form.querySelector("input[name='keyword']");
+    if (keywordInput) {
+        keywordInput.addEventListener("keypress", function(e) {
+            if (e.key === "Enter") {
+                e.preventDefault(); // ngăn reload mặc định
+                form.submit();
+            }
+        });
+    }
+});
+</script>
+{% endblock %}

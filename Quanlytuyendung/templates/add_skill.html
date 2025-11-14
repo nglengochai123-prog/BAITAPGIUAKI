@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<style>
+/* ===== CARD TIÊU ĐỀ ===== */
+.skill-header-card {
+    background: linear-gradient(90deg, #2d6cdf, #00b4d8);
+    padding: 30px 40px;
+    border-radius: 20px 20px 0 0;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.skill-header-card .icon-box {
+    background: rgba(255,255,255,0.2);
+    padding: 15px;
+    border-radius: 12px;
+    font-size: 26px;
+}
+
+.skill-header-card h2 {
+    font-weight: 700;
+    margin: 0;
+    font-size: 28px;
+}
+
+/* ===== FORM CONTAINER ===== */
+.skill-form-container {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 0 0 20px 20px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    margin-bottom: 40px;
+}
+
+.skill-form-container label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: block;
+    color: #1e293b;
+}
+
+/* Style input Django tạo sẵn */
+#id_name {
+    width: 100%;
+    border: 2px solid #e2e8f0;
+    padding: 14px 16px;
+    border-radius: 12px;
+    font-size: 16px;
+    transition: 0.2s;
+}
+
+#id_name:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 6px rgba(59,130,246,0.3);
+    outline: none;
+}
+
+/* BUTTON */
+.btn-add-skill {
+    background: #10b981;
+    color: white;
+    padding: 12px 22px;
+    border-radius: 12px;
+    font-size: 17px;
+    font-weight: 600;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.2s;
+    margin-top: 16px;
+}
+
+.btn-add-skill:hover {
+    background: #059669;
+}
+
+/* ===== DANH SÁCH ===== */
+.skill-list-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 35px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+.skill-list-card h3 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.skill-list-card p.total {
+    color: #64748b;
+    margin-bottom: 25px;
+}
+
+.empty-skill {
+    text-align: center;
+    padding: 50px 0;
+    color: #64748b;
+}
+
+.empty-skill .icon {
+    font-size: 40px;
+    opacity: 0.6;
+    margin-bottom: 10px;
+}
+</style>
+
+<div class="container mt-5">
+
+    <!-- HEADER -->
+    <div class="skill-header-card">
+        <div class="icon-box">✨</div>
+        <h2>Thêm kỹ năng mới</h2>
+    </div>
+
+    <!-- FORM -->
+    <div class="skill-form-container">
+        <form method="post">
+            {% csrf_token %}
+            <label for="id_name">Tên kỹ năng:</label>
+            {{ form.name }}
+
+            <button type="submit" class="btn-add-skill">
+                ➕ Thêm kỹ năng
+            </button>
+        </form>
+    </div>
+
+    <!-- DANH SÁCH -->
+    <div class="skill-list-card">
+        <h3>Danh sách kỹ năng hiện có:</h3>
+        <p class="total">Tổng số: {{ all_skills|length }} kỹ năng</p>
+
+        {% if all_skills %}
+            <ul class="list-group">
+                {% for skill in all_skills %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+{{ skill.name }}
+                    <form method="post" action="{% url 'delete_skill' skill.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm"
+                                onclick="return confirm('Bạn có chắc muốn xóa kỹ năng này không?');">
+                            Xóa
+                        </button>
+                    </form>
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <div class="empty-skill">
+                <div class="icon">✨</div>
+                <h5>Chưa có kỹ năng nào được thêm</h5>
+                <p>Hãy thêm kỹ năng đầu tiên của bạn!</p>
+            </div>
+        {% endif %}
+    </div>
+
+</div>
+{% endblock %}

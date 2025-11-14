@@ -1,0 +1,53 @@
+{% extends "sidebar_content.html" %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block page_content %}
+<div class="container-fluid mt-3">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>{{ page_title }}</h2>
+        <a href="{% url 'criteria_create' %}" class="btn btn-primary">
+            + Tạo Tiêu Chí Mới
+        </a>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            {% if criteria_list %}
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Tên Tiêu Chí</th>
+                            <th>Loại</th>
+                            <th>Trọng Số (%)</th>
+                            <th>Mô Tả Ngắn</th>
+                            <th>Thao Tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for criteria in criteria_list %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ criteria.name }}</td>
+                                <td>{{ criteria.get_type_display }}</td> 
+                                <!-- Dùng get_FIELD_display để hiển thị tên thân thiện cho choices -->
+                                <td>{{ criteria.weight|floatformat:2 }}%</td>
+                                <td>{{ criteria.description|truncatechars:100 }}</td>
+                                <td>
+                                    <!-- Nút chỉnh sửa -->
+                                    <a href="#" class="btn btn-sm btn-warning">Sửa</a> 
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="alert alert-info" role="alert">
+                    <p>Chưa có tiêu chí đánh giá nào được tạo.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock page_content %}

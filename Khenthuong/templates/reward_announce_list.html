@@ -1,0 +1,50 @@
+{% extends "sidebar_content.html" %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block page_content %}
+<div class="container-fluid mt-3">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>{{ page_title }}</h2>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            {% if announces %}
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Tên Thông Báo</th>
+                            <th>Hạng Mục Áp Dụng</th>
+                            <th>Ngân Sách (VND)</th>
+                            <th>SL Tối Đa</th>
+                            <th>Ngày Thông Báo</th>
+                            <th>Thao Tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for announce in announces %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ announce.name }}</td>
+                                <td>{{ announce.reward_code.name }}</td> 
+                                <td>{{ announce.budget|floatformat:0 }}</td> 
+                                <td>{{ announce.maximum_employee }}</td>
+                                <td>{{ announce.announced_date|date:"d/m/Y" }}</td>
+                                <td>
+                                    <a href="#" class="btn btn-sm btn-info">Xem chi tiết</a> 
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="alert alert-info" role="alert">
+                    <p>Chưa có thông báo khen thưởng nào được tạo.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

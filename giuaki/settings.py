@@ -127,8 +127,9 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),
                     os.path.join(BASE_DIR, 'giuaki', 'static'),
                     os.path.join(BASE_DIR, 'giuaki', 'images'),]
+
 MEDIA_URL = "/media/" # Định nghĩa URL để truy cập tệp media
-MEDIA_ROOT = BASE_DIR / "media" # Định nghĩa thư mục lưu trữ vật lý
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # Định nghĩa thư mục lưu trữ vật lý
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

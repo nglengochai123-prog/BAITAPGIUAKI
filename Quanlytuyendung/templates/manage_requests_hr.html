@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<style>
+    .action-buttons {
+        display: flex;
+        gap: 12px;
+        margin-top: 10px;
+    }
+
+    .action-buttons form {
+        display: inline-block;
+    }
+
+    .action-buttons .btn {
+        font-weight: 600;
+        padding: 6px 14px;
+        border-radius: 8px;
+    }
+</style>
+
+<div class="container my-5">
+    <h1 class="text-center fw-bold mb-3">{{ title }}</h1>
+    <p class="text-center text-muted mb-5">Xem và duyệt các yêu cầu tuyển dụng từ quản lý</p>
+
+    <div class="card shadow-sm p-4">
+
+        {% for req in all_requests %}
+        <div class="border rounded p-3 mb-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="fw-bold">{{ req.request_name }}</h5>
+                <span class="badge
+                    {% if req.request_status == "CONSIDERING" %} bg-warning
+                    {% elif req.request_status == "ACCEPTED" %} bg-success
+                    {% else %} bg-danger {% endif %}">
+                    {{ req.get_request_status_display }}
+                </span>
+            </div>
+
+            <p class="text-muted mb-1">{{ req.department }} | {{ req.recruitment_position }} | {{ req.date_requested|date:"d/m/Y" }}</p>
+            <p>{{ req.reason|truncatechars:100 }}</p>
+
+            <div class="action-buttons">
+                {% if req.request_status != "ACCEPTED" %}
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="request_id" value="{{ req.id }}">
+                    <button type="submit" name="action" value="accept" class="btn btn-success btn-sm">✅ Chấp nhận</button>
+                </form>
+                {% endif %}
+
+                {% if req.request_status != "REJECTED" %}
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="request_id" value="{{ req.id }}">
+                    <button type="submit" name="action" value="reject" class="btn btn-danger btn-sm">❌ Từ chối</button>
+                </form>
+                {% endif %}
+
+                {% if req.request_status != "CONSIDERING" %}
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="request_id" value="{{ req.id }}">
+                    <button type="submit" name="action" value="reset" class="btn btn-warning btn-sm">🔄 Đặt lại</button>
+                </form>
+                {% endif %}
+            </div>
+
+        </div>   <!-- ⭐ BẠN ĐÃ QUÊN DÒNG NÀY -->
+        {% empty %}
+            <p class="text-center text-muted mb-0">Hiện chưa có yêu cầu nào.</p>
+        {% endfor %}
+
+    </div>
+</div>
+{% endblock %}

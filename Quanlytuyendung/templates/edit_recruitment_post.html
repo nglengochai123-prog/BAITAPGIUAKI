@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>{{ title }}</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <div class="d-flex gap-2 mt-3">
+            <button type="submit" class="btn btn-primary">💾 Lưu thay đổi</button>
+            <a href="{% url 'delete_recruitment_post' post.pk %}" 
+               class="btn btn-danger"
+               onclick="return confirm('Bạn có chắc muốn xóa bài đăng này không?');">
+               🗑️ Xóa bài đăng
+            </a>
+            <a href="{% url 'all_job_postings_hr' %}" class="btn btn-secondary">↩ Quay lại</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

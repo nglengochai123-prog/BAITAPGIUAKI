@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}Chi tiết bảng lương{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <a href="{% url 'payroll_management_view' %}" class="btn btn-secondary mb-3">
+        ← Quay lại
+    </a>
+
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h3>Bảng lương chi tiết – {{ employee.full_name }}</h3>
+            <p>Kỳ lương: {{ period.name }}</p>
+        </div>
+
+        <div class="card-body">
+
+            <h4 class="mb-3">1. Thông tin chung</h4>
+            <ul>
+                <li><strong>Nhân viên:</strong> {{ employee.full_name }}</li>
+                <li><strong>Email:</strong> {{ employee.email }}</li>
+                <li><strong>Kỳ lương:</strong> {{ period.name }}</li>
+                <li><strong>Ngày:</strong> {{ period.start_date }} → {{ period.end_date }}</li>
+            </ul>
+
+            <hr>
+
+            <h4 class="mb-3">2. Chi tiết tính lương</h4>
+            <table class="table table-bordered">
+                <tr>
+                    <th>Lương cơ bản (Rate)</th>
+                    <td>{{ entry.basic_salary|floatformat:2 }} VND</td>
+                </tr>
+                <tr>
+                    <th>Ngày công thực tế</th>
+                    <td>{{ entry.actual_worked_days }} / {{ entry.standard_worked_days }}</td>
+                </tr>
+                <tr>
+                    <th>Tổng phụ cấp</th>
+                    <td>{{ entry.total_allowance|floatformat:2 }} VND</td>
+                </tr>
+                <tr>
+                    <th>Tổng thưởng</th>
+                    <td>{{ entry.total_reward|floatformat:2 }} VND</td>
+                </tr>
+                <tr class="table-success">
+                    <th>Thực lĩnh</th>
+                    <td><strong>{{ entry.received|floatformat:2 }} VND</strong></td>
+                </tr>
+            </table>
+
+            <h5 class="mt-4">🧮 Công thức tính</h5>
+            <p>
+                <code>
+                    Lương thực lĩnh =
+                    (Lương cơ bản / Ngày chuẩn × Ngày thực tế)
+                    + Phụ cấp
+                    + Thưởng
+                </code>
+            </p>
+
+            <hr>
+
+            <h4 class="mb-3">3. Chi tiết chấm công</h4>
+
+            {% if timekeeping_records %}
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Ngày</th>
+                            <th>Check-in</th>
+                            <th>Check-out</th>
+                            <th>Trạng thái</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tk in timekeeping_records %}
+                        <tr>
+                            <td>{{ tk.date_of_attendance }}</td>
+                            <td>{{ tk.check_in }}</td>
+                            <td>{{ tk.check_out }}</td>
+                            <td>{{ tk.status }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>Không có dữ liệu chấm công trong kỳ.</p>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+{% endblock %}

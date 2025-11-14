@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<style>
+.dashboard {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+    padding: 40px;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+    padding: 20px;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.stat-box {
+    background: #f0f7ff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: 600;
+    color: #0d3b66;
+}
+
+.stat-number {
+    font-size: 24px;
+    font-weight: 800;
+    color: #2563eb;
+}
+
+.post-item {
+    background-color: #ffffff;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+}
+
+.post-item:hover {
+    transform: translateX(5px);
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.bg-light-hover:hover {
+    background-color: #f0f7ff;
+}
+
+.post-item a {
+    text-decoration: none;
+    color: #0d3b66;
+    font-weight: 600;
+}
+
+.feature-box {
+    background: #f4f8ff;
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    transition: 0.2s;
+}
+
+.feature-box:hover {
+    background: #e0ebff;
+    transform: translateY(-2px);
+}
+
+.feature-box a {
+    color: #0d3b66;
+    text-decoration: none;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.feature-box i {
+    color: #2563eb;
+}
+</style>
+
+<div class="dashboard">
+    <!-- TRÁI: BÀI ĐĂNG TUYỂN DỤNG -->
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center rounded">
+            <h5 class="mb-0">📢 Bài đăng tuyển dụng mới nhất</h5>
+            <a href="{% url 'all_job_postings_hr' %}" class="btn btn-light btn-sm fw-bold">
+                Xem tất cả →
+            </a>
+        </div>
+
+        <div class="card-body" style="max-height: 400px; overflow-y: auto;">
+            {% for post in latest_posts %}
+                <div class="post-item mb-3 p-3 border-start border-3 border-primary rounded bg-light-hover">
+                    <a href="{% url 'recruitment_post_detail' post.id %}">
+                        {{ post.title }}
+                    </a>
+                    <div class="text-muted small mt-1">
+                        📅 {{ post.created_at|date:"d/m/Y" }}
+                    </div>
+                </div>
+            {% empty %}
+                <p class="text-muted text-center my-3">Chưa có bài đăng tuyển dụng nào.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- PHẢI: THỐNG KÊ + CHỨC NĂNG -->
+    <div>
+        <div class="card mb-4">
+            <h4>📊 Thống kê nhanh</h4>
+            <div class="stats">
+                <div class="stat-box">
+                    <div class="stat-number">{{ total_posts }}</div>
+                    Bài đăng
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">{{ total_candidates }}</div>
+                    Ứng viên
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">{{ total_skills }}</div>
+                    Kỹ năng
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">{{ total_requests }}</div>
+                    Yêu cầu
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h4>⚙️ Quản lý nhanh</h4>
+            <div class="feature-box">
+                <a href="{% url 'manage_status' %}">
+                    Quản lý Ứng viên
+                    <i class="bi bi-people-fill"></i>
+                </a>
+            </div>
+            <div class="feature-box">
+                <a href="{% url 'add_skill' %}">
+                    Quản lý Kỹ năng
+                    <i class="bi bi-lightbulb-fill"></i>
+                </a>
+            </div>
+            <div class="feature-box">
+                <a href="{% url 'manage_requests_hr' %}">
+                    Quản lý Yêu cầu tuyển dụng
+                    <i class="bi bi-file-earmark-text-fill"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

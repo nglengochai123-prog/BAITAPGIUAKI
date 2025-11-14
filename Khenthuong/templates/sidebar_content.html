@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row">
+
+        <div class="col-md-3 col-lg-2 bg-light border-right sidebar-sticky">
+            {% block sidebar_nav %}
+                <div class="p-3">
+                    <h5 class="mb-3 text-primary">Hiệu Suất & Khen Thưởng</h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="{% url 'project_list' %}">Quản Lý Dự Án</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="{% url 'criteria_list' %}">Danh Mục Tiêu Chí</a>
+                        </li>
+                        <li class="nav-item">
+                            <hr class="my-2">
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="{% url 'reward_list' %}">Danh Sách Khen Thưởng</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="{% url 'reward_announce_list' %}">Thông Báo Khen Thưởng</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="{% url 'reward_suggest_list' %}">Lịch Sử Đề Xuất</a>
+                        </li>
+                    </ul>
+                </div>
+            {% endblock %}
+        </div>
+
+        <div class="col-md-9 col-lg-10 p-4">
+            {% block page_content %}
+                {% endblock %}
+        </div>
+    </div>
+{% endblock content %}

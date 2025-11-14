@@ -1,25 +1,142 @@
-{% extends 'base.html' %}
-
-{% block title %}{{ title }}{% endblock %} 
+{% extends 'base_guest.html' %}
+{% block title %}{{ title }}{% endblock %}
 
 {% block content %}
-<div class="container-fluid">
+<style>
+    .job-list-container {
+        max-width: 900px;
+        margin: 50px auto;
+        background-color: #f4f8ff;
+        border-radius: 10px;
+        padding: 30px;
+    }
+
+    h1 {
+        font-weight: 700;
+        color: #0d3b66;
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .job-card {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+        padding: 20px 25px;
+        margin-bottom: 20px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        border: 1px solid #e5e7eb;
+        position: relative;
+    }
+
+    .job-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .job-card h5 {
+        margin-bottom: 8px;
+        font-weight: 700;
+    }
+
+    .job-card a {
+        text-decoration: none;
+        color: #2563eb;
+    }
+
+    .job-card a:hover {
+        text-decoration: underline;
+    }
+
+    /* --- Tiêu đề + Badge căn 2 bên --- */
+    .job-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 10px;
+        position: relative;
+    }
+
+    /* Badge nằm sát phải */
+    .badge-status {
+        font-size: 14px;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-weight: 600;
+        color: #fff;
+        white-space: nowrap;
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+
+    .badge-status.open {
+        background-color: #22c55e; /* xanh lá */
+    }
+
+    .badge-status.closed {
+        background-color: #9ca3af; /* xám */
+    }
+
+    /* --- Thông tin phụ --- */
+    .job-meta {
+        color: #6b7280;
+        font-size: 15px;
+        margin-bottom: 8px;
+    }
+
+    .job-meta strong {
+        color: #111827;
+        font-weight: 600;
+    }
+
+    .job-description {
+        color: #374151;
+        font-size: 16px;
+        margin-bottom: 0;
+    }
+
+    /* Responsive: nếu màn hình nhỏ, badge xuống hàng */
+    @media (max-width: 576px) {
+        .badge-status {
+            position: static;
+            margin-top: 6px;
+        }
+        .job-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
+</style>
+
+<div class="job-list-container">
     <h1>{{ title }}</h1>
 
-    <div class="all-posts-list">
-        <ul class="list-group">
-        {% for post in all_posts %}
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                <div>
-                    <h5><a href="#">{{ post.title }}</a></h5> 
-                    <p>{{ post.content|truncatechars:100 }}</p>
-                </div>
-                <span class="badge badge-info badge-pill">{{ post.date_posted|date:"d/m/Y" }}</span>
-            </li>
-        {% empty %}
-            <li class="list-group-item">Hiện không có bài đăng nào.</li>
-        {% endfor %}
-        </ul>
-    </div>
+    {% for post in all_posts %}
+        <div class="job-card">
+            <div class="job-header">
+                <h5 class="mb-0">
+                    <a href="{% url 'recruitment_post_detail' post.pk %}">
+                        {{ post.title }}
+                    </a>
+                </h5>
+
+                {% if post.status == "OPEN" %}
+                    <span class="badge-status open">Đang tuyển</span>
+                {% else %}
+                    <span class="badge-status closed">Đã đóng</span>
+                {% endif %}
+            </div>
+<p class="job-meta">
+                <strong>Lương:</strong> {{ post.salary }} &nbsp;|&nbsp;
+                <strong>Hình thức làm việc:</strong> {{ post.job_type }} &nbsp;|&nbsp;
+                <strong>Ngày đăng:</strong> {{ post.date_posted|date:"d/m/Y" }}
+            </p>
+
+            <p class="job-description">{{ post.content|truncatechars:120 }}</p>
+        </div>
+    {% empty %}
+        <p class="text-center text-muted">Hiện không có bài đăng nào.</p>
+    {% endfor %}
 </div>
 {% endblock %}

@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+{% block title %}Thông tin ứng viên{% endblock %}
+
+{% block content %}
+<style>
+    /* ----- TOÀN BỘ STYLE SAO CHÉP TỪ manage_status.html ----- */
+    body {
+        background-color: #f8fafc;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 30px;
+        margin-bottom: 20px;
+    }
+
+    .page-header h2 {
+        font-weight: 700;
+        color: #0f172a;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    /* Chúng ta sẽ dùng class 'content-card' này
+       để thay thế cho 'card' của bootstrap
+    */
+    .content-card {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        padding: 25px 30px;
+    }
+
+    /* Style cho các tiêu đề phụ (h4) */
+    .content-card h4 {
+        font-weight: 600;
+        color: #1e293b;
+        border-bottom: 1px solid #e2e8f0;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+    }
+
+    /* Style cho các dòng thông tin (p) */
+    .content-card p {
+        font-size: 16px;
+        line-height: 1.7;
+        color: #374151;
+        margin-bottom: 12px;
+    }
+
+    .content-card p strong {
+        color: #111827;
+        min-width: 170px; /* Căn lề cho đẹp */
+        display: inline-block;
+    }
+
+    /* Style cho danh sách kỹ năng */
+    .content-card ul {
+        list-style-type: disc;
+        padding-left: 25px;
+        margin-top: 15px;
+    }
+
+    .content-card li {
+        font-size: 15px;
+        color: #374151;
+        margin-bottom: 6px;
+    }
+
+    /* Style cho đường kẻ ngang */
+    hr {
+        border-top: 1px solid #e5e7eb;
+        margin: 30px 0;
+    }
+
+    /* ----- CÁC STYLE CHO NÚT BẤM ----- */
+    .btn-action {
+        font-size: 13px;
+        padding: 8px 14px; /* Tăng padding một chút */
+        border-radius: 6px;
+        font-weight: 600;
+        text-decoration: none;
+        color: white;
+        display: inline-block;
+        border: none;
+        transition: background-color 0.2s ease;
+    }
+
+    .btn-view {
+        background-color: #0ea5e9;
+    }
+
+    .btn-view:hover {
+        background-color: #0284c7;
+    }
+
+    /* Nút "Quay lại" (style phụ) */
+    .btn-back {
+        background-color: #f1f5f9;
+        color: #1e293b;
+        font-weight: 600;
+        border: 1px solid #d1d5db;
+        padding: 10px 20px;
+        border-radius: 8px;
+        transition: background-color 0.2s ease;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-back:hover {
+        background-color: #e2e8f0;
+    }
+
+    .text-muted {
+        color: #9ca3af;
+        font-style: italic;
+    }
+</style>
+
+<div class="container mt-4">
+
+    <div class="page-header">
+        <h2>Thông tin ứng viên: {{ candidate.fullname }}</h2>
+    </div>
+
+    <div class="content-card">
+
+        <h4>Thông tin cá nhân</h4>
+
+        <p><strong>Họ và tên:</strong> {{ candidate.fullname }}</p>
+        <p><strong>Email:</strong> {{ candidate.email }}</p>
+        <p><strong>Số điện thoại:</strong> {{ candidate.phone_number }}</p>
+        <p><strong>Trình độ học vấn:</strong> {{ candidate.study }}</p>
+        <p><strong>Vị trí ứng tuyển:</strong> {{ candidate.apply_position }}</p>
+
+        <hr>
+
+        <h4>Kỹ năng</h4>
+        {% if candidate.skill.all %}
+            <ul>
+            {% for s in candidate.skill.all %}
+                <li>{{ s.name }}</li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-muted">Chưa có kỹ năng nào.</p>
+        {% endif %}
+
+        <hr>
+
+        <h4>CV ứng viên</h4>
+        <p>
+            {% if candidate.cv_file %}
+                <a href="{{ candidate.cv_file.url }}" target="_blank" class="btn-action btn-view">
+                    Tải CV xuống
+                </a>
+            {% else %}
+                <span class="text-muted">Ứng viên chưa nộp CV.</span>
+            {% endif %}
+        </p>
+    </div>
+
+    <a href="{% url 'manage_status' %}" class="btn-back mt-3">Quay lại</a>
+
+</div>
+{% endblock %}

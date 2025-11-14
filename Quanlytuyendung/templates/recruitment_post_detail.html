@@ -1,0 +1,174 @@
+{% extends 'base.html' %}
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #f5f8ff;
+    }
+
+    .job-detail-container {
+        max-width: 900px;
+        margin: 50px auto;
+        background: white;
+        border-radius: 15px;
+        padding: 40px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    }
+
+    .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #2563eb;
+        font-weight: 600;
+        text-decoration: none;
+    }
+    .back-link:hover {
+        text-decoration: underline;
+    }
+
+    .job-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .job-header h2 {
+        font-weight: 700;
+        color: #0d3b66;
+        margin: 0;
+    }
+
+    .badge-status {
+        display: inline-block;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #fff;
+    }
+    .badge-status.open {
+        background-color: #22c55e;
+    }
+    .badge-status.closed {
+        background-color: #9ca3af;
+    }
+
+    .job-meta {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin: 20px 0;
+        padding: 15px 0;
+        border-top: 1px solid #e5e7eb;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .meta-item {
+        flex: 1;
+        min-width: 180px;
+        margin-bottom: 10px;
+    }
+
+    .meta-item span {
+        display: block;
+        color: #6b7280;
+        font-size: 15px;
+    }
+
+    .meta-item strong {
+        color: #111827;
+        font-size: 17px;
+    }
+
+    .job-content {
+        color: #374151;
+        font-size: 16px;
+        line-height: 1.7;
+        white-space: pre-line;
+    }
+
+    .action-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 30px;
+    }
+
+    .btn-apply {
+        background-color: #2563eb;
+        color: #fff;
+        font-weight: 600;
+        border: none;
+        padding: 14px 35px;
+        border-radius: 10px;
+        font-size: 16px;
+        transition: 0.3s ease;
+    }
+    .btn-apply:hover {
+        background-color: #1e40af;
+    }
+
+    .btn-save {
+        background-color: #f3f4f6;
+        color: #111827;
+        font-weight: 600;
+        border: 1px solid #d1d5db;
+        padding: 14px 35px;
+        border-radius: 10px;
+        font-size: 16px;
+        transition: 0.3s ease;
+    }
+    .btn-save:hover {
+        background-color: #e5e7eb;
+    }
+        .badge-status {
+    position: relative;
+    top: 7px; /* hạ badge xuống 2px */
+}
+</style>
+
+<div class="container">
+    <a href="{% url 'all_job_postings' %}" class="back-link">← Quay lại</a>
+
+    <div class="job-detail-container">
+        <div class="job-header">
+            <h2>{{ post.title }}</h2>
+            {% if post.status == "OPEN" %}
+<span class="badge-status open">Đang tuyển</span>
+            {% else %}
+                <span class="badge-status closed">Đã đóng</span>
+            {% endif %}
+        </div>
+
+        {% if post.post_skill_needed %}
+        <p class="text-muted mb-3">{{ post.post_skill_needed }}</p>
+        {% endif %}
+
+        <div class="job-meta">
+            <div class="meta-item">
+                <span>💰 Lương</span>
+                <strong>{{ post.salary|default:"Thỏa thuận" }}</strong>
+            </div>
+            <div class="meta-item">
+                <span>🕒 Hình thức làm việc</span>
+                <strong>{{ post.job_type|default:"Không rõ" }}</strong>
+            </div>
+            <div class="meta-item">
+                <span>📅 Ngày đăng</span>
+                <strong>{{ post.date_posted|date:"d/m/Y" }}</strong>
+            </div>
+        </div>
+
+        <div class="job-content">
+            {{ post.content|linebreaks }}
+        </div>
+
+        <div class="action-buttons">
+            <a href="{% url 'candidate_apply' %}" class="btn-apply">Ứng tuyển</a>
+            <button class="btn-save">Lưu tin</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
