@@ -41,6 +41,7 @@ urlpatterns = [
     path('', include('Quanlytuyendung.urls')),
     path('', include('Khenthuong.urls')),
     path('', include('Tinhluong.urls')),
+    path('', include('Quanlyhoso.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

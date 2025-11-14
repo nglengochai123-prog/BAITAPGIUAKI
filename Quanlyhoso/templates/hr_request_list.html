@@ -1,0 +1,42 @@
+{% extends base_layout %}
+{% block title %}Duyệt Yêu cầu Cập nhật{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <h3>Danh sách chờ duyệt ({{ requests.count }})</h3>
+    <p>Các yêu cầu cập nhật hồ sơ từ nhân viên.</p>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Nhân viên</th>
+                        <th>Mã NV</th>
+                        <th>Ngày yêu cầu</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for req in requests %}
+                    <tr>
+                        <td><strong>{{ req.employee.full_name }}</strong></td>
+                        <td>{{ req.employee.employee_id }}</td>
+                        <td>{{ req.requested_at|date:"d/m/Y H:i" }}</td>
+                        <td>
+                            <a href="{% url 'hr_request_detail' req.pk %}" class="btn btn-primary btn-sm">
+                                Xem & Duyệt
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center">Không có yêu cầu nào đang chờ duyệt.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

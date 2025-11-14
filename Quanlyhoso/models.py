@@ -41,13 +41,20 @@ class Employee(models.Model):
     phone_number = models.CharField(max_length=15, blank=True, verbose_name="Số điện thoại")
     address = models.TextField(blank=True, verbose_name="Địa chỉ")
     cic = models.CharField(max_length=20, blank=True, verbose_name="Số CMND/CCCD")
+    user = models.OneToOneField(
+        User,
+        on_delete=models.SET_NULL,  # Hoặc models.CASCADE
+        null=True,
+        blank=True,
+        verbose_name="Tài khoản đăng nhập"
+    )
 
     class Meta:
         verbose_name = "Nhân Viên"
         verbose_name_plural = "Các Nhân Viên"
 
     def __str__(self):
-        return f"{self.employee_id} - {self.employee_id.get_full_name()}"
+        return f"{self.employee_id} - {self.full_name}"
 
 class Contract(models.Model):
     CONTRACT_TYPE_CHOICES = (
@@ -110,5 +117,86 @@ class LeaveApplication(models.Model):
         return f"Đơn của {self.employee.full_name} - {self.started_date}"
 
 
+class ProfileUpdateRequest(models.Model):
+    """
+    Model này lưu lại yêu cầu thay đổi thông tin của nhân viên,
+    chờ HR duyệt.
+    """
+    STATUS_CHOICES = (
+        ('Chờ duyệt', 'Chờ duyệt'),
+        ('Đã duyệt', 'Đã duyệt'),
+        ('Bị từ chối', 'Bị từ chối'),
+    )
+
+    # Nhân viên gửi yêu cầu
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name="update_requests",
+                                 verbose_name="Nhân viên")
+
+    # --- Các trường thông tin MỚI ---
+    # Chúng ta để (null=True, blank=True) để nhân viên chỉ cần điền trường họ muốn đổi.
+
+    full_name = models.CharField(max_length=50, blank=True, null=True, verbose_name='Họ và tên mới')
+    avatar = models.ImageField(upload_to='avatar_requests/', null=True, blank=True, verbose_name="Ảnh đại diện mới")
+    dob = models.DateField(null=True, blank=True, verbose_name="Ngày sinh mới")
+    gender = models.CharField(max_length=10, choices=Employee.GENDER_CHOICES, blank=True, null=True,
+                              verbose_name="Giới tính mới")
+    phone_number = models.CharField(max_length=15, blank=True, null=True, verbose_name="Số điện thoại mới")
+    address = models.TextField(blank=True, null=True, verbose_name="Địa chỉ mới")
+    cic = models.CharField(max_length=20, blank=True, null=True, verbose_name="Số CMND/CCCD mới")
+
+    # --- Thông tin quy trình duyệt ---
+    status = models.CharField(max_length=50, choices=STATUS_CHOICES, default='Chờ duyệt', verbose_name="Trạng thái")
+    requested_at = models.DateTimeField(auto_now_add=True, verbose_name="Ngày yêu cầu")
+
+    # Người xử lý (HR)
+    handler = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True,
+                                related_name='handled_profile_updates', verbose_name="Người xử lý")
+    handled_at = models.DateTimeField(null=True, blank=True, verbose_name="Ngày xử lý")
+    hr_note = models.TextField(blank=True, verbose_name="Ghi chú của HR (nếu từ chối)")
+
+    class Meta:
+        verbose_name = "Yêu cầu Cập nhật Hồ sơ"
+        verbose_name_plural = "Các Yêu cầu Cập nhật Hồ sơ"
+        ordering = ['-requested_at']
+
+    def __str__(self):
+        return f"Yêu cầu từ {self.employee.full_name} ({self.status})"
+
+
+class TrainingRequest(models.Model):
+    """
+    Model lưu lại các yêu cầu đào tạo từ nhân viên.
+    """
+    STATUS_CHOICES = (
+        ('Chờ duyệt', 'Chờ duyệt'),
+        ('Đã duyệt', 'Đã duyệt'),
+        ('Bị từ chối', 'Bị từ chối'),
+    )
+
+    # Nhân viên gửi yêu cầu
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name="training_requests",
+                                 verbose_name="Nhân viên")
+
+    # Thông tin yêu cầu
+    course_name = models.CharField(max_length=255, verbose_name="Tên khóa học hoặc chủ đề")
+    reason = models.TextField(verbose_name="Lý do/Mục tiêu đào tạo")
+
+    # Quy trình duyệt
+    status = models.CharField(max_length=50, choices=STATUS_CHOICES, default='Chờ duyệt', verbose_name="Trạng thái")
+    submitted_date = models.DateTimeField(auto_now_add=True, verbose_name="Ngày gửi yêu cầu")
+
+    # Người xử lý (HR/Quản lý)
+    handler = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True,
+                                related_name='handled_training_requests', verbose_name="Người xử lý")
+    handled_at = models.DateTimeField(null=True, blank=True, verbose_name="Ngày xử lý")
+    hr_note = models.TextField(blank=True, verbose_name="Ghi chú của HR (nếu từ chối)")
+
+    class Meta:
+        verbose_name = "Yêu cầu Đào tạo"
+        verbose_name_plural = "Các Yêu cầu Đào tạo"
+        ordering = ['-submitted_date']
+
+    def __str__(self):
+        return f"Yêu cầu: {self.course_name} (từ {self.employee.full_name})"
 
 # Create your models here.

@@ -1,0 +1,145 @@
+{% extends 'base.html' %} 
+{% block title %}Chi tiết Yêu cầu{% endblock %}
+
+{% block extrastyle %}
+<style>
+    .data-compare {
+        background-color: #f7f9fc;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #e9ecef;
+    }
+    .data-compare .old-data {
+        color: #6c757d;
+        text-decoration: line-through;
+    }
+    .data-compare .new-data {
+        color: #28a745;
+        font-weight: 600;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <h3>Duyệt Yêu cầu Cập nhật</h3>
+    <h4>Nhân viên: {{ employee.full_name }} ({{ employee.employee_id }})</h4>
+    <p class="text-muted">Yêu cầu lúc: {{ update_request.requested_at|date:"d/m/Y H:i" }}</p>
+    
+    <hr>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h5 class="mb-0">Thông tin so sánh (Cũ vs Mới)</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Trường thông tin</th>
+                                <th>Thông tin CŨ (hiện tại)</th>
+                                <th>Thông tin MỚI (yêu cầu)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if update_request.full_name %}
+                            <tr>
+                                <td>Họ và tên</td>
+                                <td class="text-muted">{{ employee.full_name }}</td>
+                                <td class="text-success font-weight-bold">{{ update_request.full_name }}</td>
+                            </tr>
+                            {% endif %}
+                            
+                            {% if update_request.dob %}
+                            <tr>
+                                <td>Ngày sinh</td>
+                                <td class="text-muted">{{ employee.dob|date:"d/m/Y" }}</td>
+                                <td class="text-success font-weight-bold">{{ update_request.dob|date:"d/m/Y" }}</td>
+                            </tr>
+                            {% endif %}
+                            
+                            {% if update_request.gender %}
+                            <tr>
+                                <td>Giới tính</td>
+                                <td class="text-muted">{{ employee.gender }}</td>
+                                <td class="text-success font-weight-bold">{{ update_request.gender }}</td>
+                            </tr>
+                            {% endif %}
+
+                            {% if update_request.phone_number %}
+                            <tr>
+                                <td>Số điện thoại</td>
+                                <td class="text-muted">{{ employee.phone_number }}</td>
+                                <td class="text-success font-weight-bold">{{ update_request.phone_number }}</td>
+                            </tr>
+                            {% endif %}
+                            
+                            {% if update_request.address %}
+                            <tr>
+                                <td>Địa chỉ</td>
+                                <td class="text-muted">{{ employee.address }}</td>
+                                <td class="text-success font-weight-bold">{{ update_request.address }}</td>
+                            </tr>
+                            {% endif %}
+                            
+                            {% if update_request.cic %}
+                            <tr>
+                                <td>Số CMND/CCCD</td>
+                                <td class="text-muted">{{ employee.cic }}</td>
+                                <td class="text-success font-weight-bold">{{ update_request.cic }}</td>
+                            </tr>
+                            {% endif %}
+                            
+                            {% if update_request.avatar %}
+                            <tr>
+                                <td>Ảnh đại diện</td>
+                                <td>
+                                    {% if employee.avatar %}
+                                        <img src="{{ employee.avatar.url }}" height="60">
+                                    {% else %}
+                                        (Chưa có)
+                                    {% endif %}
+                                </td>
+                                <td class="text-success font-weight-bold">
+                                    <img src="{{ update_request.avatar.url }}" height="60">
+                                    (Ảnh mới)
+                                </td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">Hành động</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <button type=submit" name="approve" class="btn btn-success btn-block mb-2">
+                            <i class="fas fa-check"></i> Duyệt và Cập nhật Hồ sơ
+                        </button>
+                        
+                        <hr>
+                        
+                        <div class="form-group">
+                            <label for="hr_note">Lý do từ chối (nếu có):</label>
+                            <textarea name="hr_note" id="hr_note" class="form-control" rows="3"></textarea>
+                        </div>
+                        <button type=submit" name="reject" class="btn btn-danger btn-block">
+                            <i class="fas fa-times"></i> Từ chối Yêu cầu
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
